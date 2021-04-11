@@ -1,12 +1,40 @@
-.card-body.mb-3
-  %h6.page_title コメントする
-  = form_with(model: [tour, comment],remote:true) do |f|
-    .form-inputs.form_group
-      = f.text_field :content,                       
-        input_html: { autocomplete: "content",class:"form-control" } 
-      =hidden_field_tag :tour_id,@tour.id
-      = f.submit "コメントする",
-        input_html: { class:"btn btn-primary " } 
+
+#modalview.modal
+  .modal-content
+    %h3.commentForm_heading コメント投稿画面
+    = form_with url: tour_comments_path(@tour.id) ,model: comment, data: {remote: "true"} do |f|
+      .form-inputs
+        .form_group
+          = f.label :タイトル
+          = f.text_field :title,autocomplete: "content",class:"form-control",placeholder: "自然の美しさを感じられる魅力的なツアーです！" 
+        .form_group.range-group
+          = f.label :評価
+          = f.range_field :evaluate,{:max => "5", :min => "1", :type => "range", :value => "0",class:"input-range" }
+        .form_group
+          = f.label :内容
+          = f.text_field :content, autocomplete: "content",class:"form-control",placeholder: "上野公園の八重桜は絶景で、お花見にぴったりでした！" 
+        = hidden_field_tag :tour_id,@tour.id
+        .action_btns-between
+          = f.submit "コメントする",class:"btn btn-primary comment_submit waves-effect waves-light btn",onclick: "Materialize.toast('コメントを投稿しました', 3000)"
+          %button.modal-close.btn.red.darken-1.actionbtn{:onclick => "modalClose"} 閉じる
 
 
-    
+:javascript
+  $('.range-group').each(function() {
+    for (var i = 0; i < 5; i ++) {
+      $(this).append('<a>');
+    }
+  }); 
+  $('.range-group>a').eq(-5).click();
+  $('.range-group>a').on('click', function() {
+    var index = $(this).index()-1;
+    $(this).siblings().removeClass('on');
+    for (var i = 0; i < index; i++) {
+        $(this).parent().find('a').eq(i).addClass('on'); 
+    }
+    $(this).parent().find('.input-range').attr('value', index);
+  });
+  $('.modal').modal();
+  function modalClose(){
+    $('.modal').modal('close');
+  }

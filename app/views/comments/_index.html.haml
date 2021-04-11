@@ -1,13 +1,21 @@
-.card
-  %h6.page_title 
-    コメント一覧
-  .card-body#comment_form
-    -comments.each do |comment|
-      .cmbox
-        %h6.card-subtitle.mb-2.text-muted 
+.aaa
+  #comment_form
+    - @comments.each do |comment|
+      .card
+        %h6.comment_title
+          #{comment.title}
+        .user_info
+          .img_circle-show
+            %img{:src => "https://lh3.googleusercontent.com/proxy/jgxxH341bFZEnTc0tgaeRFLtoser8w7U6bzRq8veLol4-HNwUGodePlZZqHK4UahYZNhPO1hjUB8MTLfrkgnLlk"}/
+          =link_to("#{comment.user.username}さん",user_path(comment.user.id),class:"user_nameLink" )
+        %p.result-rating-rate
+          %span.star5_rating{"data-rate" => "#{comment.evaluate}"}
+          %span.number_rating #{comment.evaluate}
+        %h6
           #{comment.content}
-        %p.card-subtitle.small.text-right
-          #{comment.created_at.strftime('%m/%d-%H:%M')}
-          =link_to("  #{comment.user.username}さん  ",user_path(comment.user.id))
+        .comment_footer
+          %p.comment_time
+            投稿日時: #{comment.created_at.strftime('%m/%d-%H:%M')}
           -if comment.user_id == current_user.id
-            = link_to("  コメントを削除する",tour_comment_path(comment.tour_id,comment.id),class:"card-link",method: :delete,remote:true)
+            = link_to("コメントを削除する",tour_comment_path(comment.tour_id,comment.id),class:"card-link comment_delete",method: :delete,remote:true,onclick: "Materialize.toast('コメントを削除しました', 3000)")
+

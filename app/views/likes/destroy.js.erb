@@ -1,2 +1,5 @@
-
-$('#likes_ajax').html("<%= j(render partial: 'likes/likes_box') %>");
+$('#likes_ajax').html("<%= j(render partial: 'likes/likes_box', locals: {tour: @tour}) %>");
+var count = $('.likes_count').text();
+$('.likes_count').text(String(Number(count)-1));
+$('.good_icon').removeClass('like');
+$('.good_icon').addClass('dislike');

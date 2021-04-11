@@ -2,8 +2,9 @@
 
 class ToursController < ApplicationController
   before_action :check_user_login?, only: %i[show new create edit update destroy]
-
+  before_action :set_search
   def index
+
   if params[:q]
     @q = Tour.includes(:user).ransack(params[:q])
     @tours= @q.result(distinct: :true).page(params[:page])
@@ -15,8 +16,10 @@ class ToursController < ApplicationController
   def show
     tour_find_by_id
     @like = Like.new
+    # @like.id = @tour.id
     @likes = Like.where(tour_id: @tour.id)
     @comment = Comment.new
+    @favorite = Favorite.new
     @comments = Comment.where(tour_id: @tour.id)
     @spot0 = @tour.spots[0]
     @spot1 = @tour.spots[1]

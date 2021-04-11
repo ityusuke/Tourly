@@ -4,9 +4,10 @@
   %body
     =render("layouts/header")
     =render("layouts/flash")
-    .row
-      .white_box.col-md-6
-        = yield
-   
+    .wrapper-body
+      .row
+        .col.s12.main_wrap
+          = yield
+    :javascript
 
 

@@ -1,184 +1,223 @@
-@import "bootstrap";
+// @import "bootstrap";
 @import 'font-awesome-sprockets';
 @import 'font-awesome';
-body{
-     background-image:url(travel3.jpg);
-     background-size: cover;
-     background-attachment: fixed;
-.page_title{
-    font-style: italic;
-    text-align:center;
-    margin-bottom:.5rem;
-    margin-top:.5rem;
-}
-.white_box{
-    background-color:#ffffffde;
-    color: #495057;
-    min-height:30rem;
-    margin:7rem auto;
-    border:white 1px solid;
-    border-radius:1rem;
-    padding:3rem;
-    box-shadow: 1px 1px 1px 1px #f8f9fa26;
+@import  'tours.scss';
+@import  'users.scss';
+@import  'comments.scss';
+
+$color_black: #333;
+$color_white: #FFF;
+
+a:hover{
     opacity: 0.8;
+}
+.card{
+    padding: 25px !important;
+    border-radius: 8px !important;
+}
+
+.main_wrap{
+    margin: 0 auto;
 }
 .flash{
     background-color:gray;
     width:100%;
-    color:white;
+    color:$color_white;
     opacity:0.7;
 }
-}
+.tour-item-show{
+    padding: 20px;
+  }
 
-nav{
-    background-color:white;
-    border-bottom:1px gray solid;
-.navbar-brand{
-     color: #0b499d;
+.content-box{
+    width: 100%;
+    background-color:$color_white;
+    box-shadow: 3px 3px 3px rgba(0,0,0,0.4);
+    border: none;
+    border-radius: 8px !important;
+    margin-bottom: 30px !important;
+}
+.card-title{
+color:$color_black !important;
+margin-bottom: 10px !important;
+}
+.text-left{
+    text-align: left !important;
+}
+.wrapper-body{
+    width: 97%;
+    margin: 0 auto;
+    padding-top: 30px;
+}
+.strict{
+    position: sticky;
+}
+.flex_sidebar{
+    display: flex;
+}
+.inner-content{
+    padding: 0 20px;
 }
 .nav-link{
-    font-style: italic;
-    margin-left:1rem;
-    font-weight:bold;
-    color: #6c757d;
+    font-size: 18px;
 }
-.nav-link:hover{
-    opacity:0.9;
-    border-bottom:1px gray solid;    
-}
-.dropdown-toggle{
-    margin: 0;
-    margin-left: 2rem;
-    margin-top: .2rem;
-    background-color: gray;
-     border:2px gray solid;
-    opacity:0.7;
-padding: 3px 10px;
-
-}
+.btn-floating.btn-large{
+    width: 64px !important;
+    height: 64px !important;
+    i{
+        line-height: 64px !important;
+    }
 }
 
+// nav{
+//     background-color:white;
+//     border-bottom:1px gray solid;
+// .navbar-brand{
+//      color: #0b499d;
+// }
+// .nav-link{
+//     font-style: italic;
+//     margin-left:1rem;
+//     font-weight:bold;
+//     color: #6c757d;
+// }
+// .nav-link:hover{
+//     opacity:0.9;
+//     border-bottom:1px gray solid;    
+// }
+// .dropdown-toggle{
+//     margin: 0;
+//     margin-left: 2rem;
+//     margin-top: .2rem;
+//     background-color: gray;
+//      border:2px gray solid;
+//     opacity:0.7;
+// padding: 3px 10px;
+
+// }
+// }
 
 
-.card{
-    border:1px rgba(0,0,0,0.2) solid;
-    box-shadow:2px 2px rgba(0,0,0,0.2);
+
+// .card{
+//     border:1px rgba(0,0,0,0.2) solid;
+//     box-shadow:2px 2px rgba(0,0,0,0.2);
     
-}
-.cmbox{
-    padding:1rem;
-     border-bottom:1px rgba(0,0,0,0.2) solid;  
-}
-.form_group{
-    text-align:center;
-    width:80%;
-    margin:0 auto;
+// }
+// .cmbox{
+//     padding:1rem;
+//      border-bottom:1px rgba(0,0,0,0.2) solid;  
+// }
+// .form_group{
+//     text-align:center;
+//     width:80%;
+//     margin:0 auto;
     
-label::after {
-  content: "\A" ;
-  white-space: pre;
-}
-}
+// label::after {
+//   content: "\A" ;
+//   white-space: pre;
+// }
+// }
 
-abbr{
-    display:none;
-}
-.follow_button{
-        margin:1rem auto;
-        padding:1% 45%;
+// abbr{
+//     display:none;
+// }
+// .follow_button{
+//         margin:1rem auto;
+//         padding:1% 45%;
        
-}
-.about-card{
-    margin:2rem auto;
-}
-.under-line:hover{
-    opacity:0.9;
-    border-bottom:1px gray solid;    
-}
-.carousel-fade{
-    margin:0 auto;
-}
-.favorite-btn{
-    margin:0 auto;
-    width:100%;
-}
-.user-box{
-        padding:1rem;
-     border:1px rgba(0,0,0,0.2) solid;
-    box-shadow:2px 2px rgba(0,0,0,0.2);
-}
-dl.searchbox{
-  width: 350px;
-  position:relative;
-  background-color:#fff;
-  border:1px solid #aaa;
-  border-radius:6px;
-}
-dl.searchbox dt{
-  padding:3px;
-}
-dl.searchbox dt input{
-  width:70%;
-  height:30px;
-  line-height:30px;
-  background:none;
-  border:none;
-}
-dl.searchbox dd{
-  position:absolute;
-  top:1px;
-  right:1px;
-  width:30%;
-}
-.search-btn{
-  display:block;
-  background:#5fad35;
-  width:100%;
-  height:36px;
-  line-height:36px;
-  border:none;
-  border-radius: 0 6px 6px 0;
-  color:#FFF;
-}
-.map-container {
-    position: relative;
-    width: 100%;
-    margin-bottom: 20px;
-    padding-bottom: 56.25%;
-}
+// }
+// .about-card{
+//     margin:2rem auto;
+// }
+// .under-line:hover{
+//     opacity:0.9;
+//     border-bottom:1px gray solid;    
+// }
+// .carousel-fade{
+//     margin:0 auto;
+// }
+// .favorite-btn{
+//     margin:0 auto;
+//     width:100%;
+// }
+// .user-box{
+//         padding:1rem;
+//      border:1px rgba(0,0,0,0.2) solid;
+//     box-shadow:2px 2px rgba(0,0,0,0.2);
+// }
+// dl.searchbox{
+//   width: 350px;
+//   position:relative;
+//   background-color:#fff;
+//   border:1px solid #aaa;
+//   border-radius:6px;
+// }
+// dl.searchbox dt{
+//   padding:3px;
+// }
+// dl.searchbox dt input{
+//   width:70%;
+//   height:30px;
+//   line-height:30px;
+//   background:none;
+//   border:none;
+// }
+// dl.searchbox dd{
+//   position:absolute;
+//   top:1px;
+//   right:1px;
+//   width:30%;
+// }
+// .search-btn{
+//   display:block;
+//   background:#5fad35;
+//   width:100%;
+//   height:36px;
+//   line-height:36px;
+//   border:none;
+//   border-radius: 0 6px 6px 0;
+//   color:#FFF;
+// }
+// .map-container {
+//     position: relative;
+//     width: 100%;
+//     margin-bottom: 20px;
+//     padding-bottom: 56.25%;
+// }
 
-.map-canvas {
-    position: absolute;
-    top: 0;
-    right: 40%;
-    bottom: 0;
-    left: 0;
-    margin: 0;
-    padding: 0;
-}
-.map-route {
-    overflow: scroll;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 54px;
-    left: 60%;
-    margin: 0;
-    padding: 10px;
-}
+// .map-canvas {
+//     position: absolute;
+//     top: 0;
+//     right: 40%;
+//     bottom: 0;
+//     left: 0;
+//     margin: 0;
+//     padding: 0;
+// }
+// .map-route {
+//     overflow: scroll;
+//     position: absolute;
+//     top: 0;
+//     right: 0;
+//     bottom: 54px;
+//     left: 60%;
+//     margin: 0;
+//     padding: 10px;
+// }
 
-.map-search {
-    position: absolute;
-    height: 54px;
-    right: 0;
-    bottom: 0;
-    left: 60%;
-    margin: 0;
-    padding: 10px;
-}
-.search-btn:hover {
-  background:#228B22;
-}
+// .map-search {
+//     position: absolute;
+//     height: 54px;
+//     right: 0;
+//     bottom: 0;
+//     left: 60%;
+//     margin: 0;
+//     padding: 10px;
+// }
+// .search-btn:hover {
+//   background:#228B22;
+// }
 .like{
   text-decoration: none;
   color:red;
@@ -187,37 +226,37 @@ dl.searchbox dd{
   text-decoration: none;
   color:gray;
 }
-.bd-box{
-  border-bottom:1px grey solid;
-  padding-bottom:1rem;
-  margin-bottom:0.5rem;
-}
-.links{
-    margin-left:1rem;
-    font-weight:bold;
-    color: #6c757d;
-}
-span {
-            text-align: center;
-            letter-spacing: 0.15em;
-            font-size: 10px;
-            color: #dcdcdc;
-        }
-.spots_section{
-    border: solid 1px black;
-    padding:0.5rem;
-    margin:0.5rem auto;
-    width: 100%;
-    border-radius: 0.5rem;
-}
-.arrows_box{
-    display: table-cell; 
-    vertical-align: middle;
-    margin:0 auto;
-    text-align: center;
-}
-.tour_information{
-   width:80%;
-   margin:1rem auto;
+// .bd-box{
+//   border-bottom:1px grey solid;
+//   padding-bottom:1rem;
+//   margin-bottom:0.5rem;
+// }
+// .links{
+//     margin-left:1rem;
+//     font-weight:bold;
+//     color: #6c757d;
+// }
+// span {
+//             text-align: center;
+//             letter-spacing: 0.15em;
+//             font-size: 10px;
+//             color: #dcdcdc;
+//         }
+// .spots_section{
+//     border: solid 1px black;
+//     padding:0.5rem;
+//     margin:0.5rem auto;
+//     width: 100%;
+//     border-radius: 0.5rem;
+// }
+// .arrows_box{
+//     display: table-cell; 
+//     vertical-align: middle;
+//     margin:0 auto;
+//     text-align: center;
+// }
+// .tour_information{
+//    width:80%;
+//    margin:1rem auto;
     
-}
+// }

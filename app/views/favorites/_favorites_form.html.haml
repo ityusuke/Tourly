@@ -1,11 +1,6 @@
-.follow-box  
-  - if current_user.faved?(@tour)
-    = link_to tour_favorite_path(@tour.id),method: :delete,remote: :true,class:"btn btn-success favorite-btn ml-0" do
-      = icon "fa",'book'
-      お気に入り登録解除
-      = icon "fa",'book'
-  - else
-    = link_to tour_favorites_path(@tour.id),method: :post,remote: :true,class:"btn btn-success favorite-btn ml-0" do
-      = icon "fa",'book'
-      お気に入り登録する
-      = icon "fa",'book'
+- if @favorite.id != nil && current_user.faved?(@tour)
+  = link_to tour_favorite_path(@tour.id,@favorite.id),method: :delete,remote: :true,class:"btn light-blue darken-1",onclick: "Materialize.toast('お気に入りから削除しました', 3000)" do
+    お気に入り解除
+- else
+  = link_to tour_favorites_path(@tour.id),method: :post,remote: :true,class:"btn light-blue darken-1",onclick: "Materialize.toast('お気に入りに追加しました', 3000)" do
+    お気に入り登録

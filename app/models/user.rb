@@ -38,6 +38,8 @@ class User < ApplicationRecord
   end
 
   def faved?(tour)
+    puts "fav?"
+    puts tour.id
     favtours.include?(tour)
   end
 

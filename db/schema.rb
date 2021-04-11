@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_22_144354) do
+ActiveRecord::Schema.define(version: 2021_04_09_015746) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
@@ -39,6 +39,8 @@ ActiveRecord::Schema.define(version: 2019_09_22_144354) do
     t.bigint "tour_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "title", null: false
+    t.integer "evaluate", null: false
     t.index ["tour_id"], name: "index_comments_on_tour_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
@@ -78,6 +80,11 @@ ActiveRecord::Schema.define(version: 2019_09_22_144354) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "tour_id"
+    t.string "x"
+    t.string "y"
+    t.integer "price"
+    t.integer "time"
+    t.integer "evaluate", null: false
     t.index ["tour_id"], name: "index_spots_on_tour_id"
   end
 
@@ -113,8 +120,8 @@ ActiveRecord::Schema.define(version: 2019_09_22_144354) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "spot_id"
-    t.string "tour_type"
     t.string "season"
+    t.string "tour_type"
     t.index ["user_id", "created_at"], name: "index_tours_on_user_id_and_created_at"
     t.index ["user_id"], name: "index_tours_on_user_id"
   end

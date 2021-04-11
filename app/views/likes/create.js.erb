@@ -1,1 +1,5 @@
 $('#likes_ajax').html("<%= j(render partial: 'likes/likes_box') %>");
+var count = $('.likes_count').text();
+$('.likes_count').text(String(Number(count)+1));
+$('.good_icon').removeClass('dislike');
+$('.good_icon').addClass('like');

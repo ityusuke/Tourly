@@ -11,7 +11,6 @@ class Tour < ApplicationRecord
 
   accepts_nested_attributes_for :spots
   validates :user_id, presence: true
-  validates :tourtitle, presence: true, length: { maximum: 53 }
   validates :tourcontent, presence: true, length: { maximum: 325 }
 
 

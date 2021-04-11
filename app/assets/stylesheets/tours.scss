@@ -1,3 +1,100 @@
 // Place all the styles related to the Tours controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.wdrap{
+  width: 95% !important;
+}
+.info-box{
+  display: flex;
+  justify-content: space-between;
+  padding-top: 10px;
+}
+.card-link{
+  padding-top: 10px !important;
+}
+.tour-text{
+  padding-bottom: 5px;
+}
+//new
+.gmap-wrap{
+  width: 100%;
+  height: 100%;
+  img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+.right-align{
+  display: block !important;
+  text-align: right !important;
+  margin-left: auto !important;
+  margin-bottom: 10px;
+}
+.center-align{
+  display: block !important;
+  text-align: center !important;
+  margin: 10px auto !important;
+
+}
+.tourtitle-show{
+  font-size: 24px;
+}
+.tour_info-show{
+  .icons-show{
+    font-size: 18px;
+  }
+  .tourcontent-show{
+    font-size: 18px;
+    padding-top: 10px;
+  }
+.collapsible-body{
+  padding-top: 15px !important;
+}
+  .action_btns{
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 20px;
+    margin: 0 auto;
+    .middleSize_btn{
+      width: 150px;
+    }
+    a,button,.actionbtn{
+      width: 150px;
+      border-radius: 5px;
+      padding: 0 10px;
+      height: 38px;
+      line-height: 38px;
+    }
+  }
+  li:hover{
+    opacity: 0.8;
+  }
+  .spot_about{
+    margin: 10px auto;
+  }
+  .tour_createTime{
+    padding-top: 10px;
+  }
+}
+.user_info{
+  display: flex;
+  justify-content: start;
+  .img_circle-show{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid #333;
+    img{
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+  }
+  .user_nameLink{
+    line-height: 40px;
+    margin-left: 8px;
+  }
+}

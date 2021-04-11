@@ -10,6 +10,5 @@
       %p.card-text
         = truncate(tour.tourcontent,separator: '.',lendth:40) do
           =link_to("続きを読む",tour_path(tour.id))
-     
 
       = link_to "詳細",tour_path(tour.id),class:"card-link"

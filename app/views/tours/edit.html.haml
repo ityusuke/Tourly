@@ -6,44 +6,44 @@
     = f.input :tourname,label: false,placeholder:"(例)大人の隠れ家！鎌倉カフェ巡り",                     
       input_html: { class:"form-control mb-3" } 
     .spots_section.form_group.form-inputs 
-      = f.simple_fields_for :spots do |s| 
-        .spots_section
-          %h6.page_title.mb-3 出発地点
-          = s.label :画像
-          = s.input :images, as: :file,
-            label: false,input_html: { class:"form-control" }  
-          = s.label :場所
-          = s.input :spotname,label: false,placeholder:"(例)井の頭公園",                                                               
-            input_html: { class:"form-control" }
-          = s.label :見どころ
-          = s.input :spotcontent,label: false,placeholder:"(例)豊かな緑と動物たち",                                                                 
-            input_html: { class:"form-control" } 
-        %h6.page_title 中間地点を増やす
-        #add_button
-          = icon "fa","plus-square"
-      = f.simple_fields_for :spots do |s|
-        .spots_section
-          %h6.page_title.mb-3.mt-3 到着地点
-          = s.label :画像
-          = s.input :images, as: :file,
-            label: false,input_html: { class:"form-control" }  
-          = s.label :場所
-          = s.input :spotname,label: false,placeholder:"(例)城崎マリンワールド",                                                               
-            input_html: { class:"form-control" }
-          = s.label :見どころ
-          = s.input :spotcontent,label: false,placeholder:"(例)ペンギンとアシカのショー",                                                                 
-            input_html: { class:"form-control" } 
+      -# = f.simple_fields_for :spots do |s| 
+      -#   .spots_section
+      -#     %h6.page_title.mb-3 出発地点
+      -#     = s.label :画像
+      -#     = s.input :images, as: :file,
+      -#       label: false,input_html: { class:"form-control" }  
+      -#     = s.label :場所
+      -#     = s.input :spotname,label: false,placeholder:"(例)井の頭公園",                                                               
+      -#       input_html: { class:"form-control" }
+      -#     = s.label :見どころ
+      -#     = s.input :spotcontent,label: false,placeholder:"(例)豊かな緑と動物たち",                                                                 
+      -#       input_html: { class:"form-control" } 
+      -#   %h6.page_title 中間地点を増やす
+      -#   #add_button
+      -#     = icon "fa","plus-square"
+      -# = f.simple_fields_for :spots do |s|
+      -#   .spots_section
+      -#     %h6.page_title.mb-3.mt-3 到着地点
+      -#     = s.label :画像
+      -#     = s.input :images, as: :file,
+      -#       label: false,input_html: { class:"form-control" }  
+      -#     = s.label :場所
+      -#     = s.input :spotname,label: false,placeholder:"(例)城崎マリンワールド",                                                               
+      -#       input_html: { class:"form-control" }
+      -#     = s.label :見どころ
+      -#     = s.input :spotcontent,label: false,placeholder:"(例)ペンギンとアシカのショー",                                                                 
+      -#       input_html: { class:"form-control" } 
           
         
     #map_canvas{:style => "width:100%; height:400px; margin:1rem"}
-    = f.label :誰と行きたいですか？
-    = f.input :tour_type,as: :select,label: false,
-      prompt: "選択してください",collection: [ ['一人で', "1"], ['友達と', "2"],['恋人と', "3"],['家族と', "4"]],
-      input_html: { class:"form-control"}
-    = f.label :どんな季節がいいですか？
-    = f.input :season,as: :select,label: false,
-      prompt: "選択してください",collection: [ ['春', "1"], ['夏', "2"],['秋', "3"], ['冬', "4"]],
-      input_html: { class:"form-control"}
+    -# = f.label :誰と行きたいですか？
+    -# = f.input :tour_type,as: :select,label: false,
+    -#   prompt: "選択してください",collection: [ ['一人で', "1"], ['友達と', "2"],['恋人と', "3"],['家族と', "4"]],
+    -#   input_html: { class:"form-control"}
+    -# = f.label :どんな季節がいいですか？
+    -# = f.input :season,as: :select,label: false,
+    -#   prompt: "選択してください",collection: [ ['春', "1"], ['夏', "2"],['秋', "3"], ['冬', "4"]],
+    -#   input_html: { class:"form-control"}
     = f.label :ツアーの説明
     = f.input :tourcontent,label: false,placeholder:"(例)鳥取県の海産グルメを満喫できるツアーです",                    
       input_html: { autocomplete: "tourcontent",class:"form-control"}
