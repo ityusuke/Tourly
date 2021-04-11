@@ -1,0 +1,5 @@
+$('#comment_form').html("<%= j(render partial: 'comments/index') %>");
+$('.form-inputs input[type=text]').val("");
+$('.modal').modal('close');
+var count = $('.comment_count').text();
+$('.comment_count').text(String(Number(count)+1));
