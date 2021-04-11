@@ -19,7 +19,7 @@ gem 'acts-as-taggable-on', '~> 4.0'
 gem 'aws-sdk-s3', require: false
 gem 'faker'
 gem 'gimei'
-gem 'kaminari', '~> 0.17.0'
+gem 'kaminari', '~> 1.2.1'
 gem 'kaminari-bootstrap', '~> 3.0.1'
 gem 'pry-byebug'
 gem 'pry-rails'
