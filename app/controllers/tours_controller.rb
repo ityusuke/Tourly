@@ -16,21 +16,21 @@ class ToursController < ApplicationController
   def show
     tour_find_by_id
     @like = Like.new
-    # @like.id = @tour.id
     @likes = Like.where(tour_id: @tour.id)
     @comment = Comment.new
-    @favorite = Favorite.new
     @comments = Comment.where(tour_id: @tour.id)
-    @spot0 = @tour.spots[0]
-    @spot1 = @tour.spots[1]
+    puts @tour.tour_tags.split(",")
+    @favorite = Favorite.new
   end
 
   def new
     @tour = Tour.new
     @spots = @tour.spots.build 
+    @tour_type = [{ "1": "一人で"}, { "2": "友達と" }, { "3": "恋人と" }, { "4": "家族と" }]
   end
 
   def create
+    puts params
     if @tour = current_user.tours.new(tour_params).save
     
       redirect_to user_path(id: current_user.id)
@@ -41,11 +41,10 @@ class ToursController < ApplicationController
 
   def edit
     tour_find_by_id
-
   end
 
   def update
-     tour_find_by_id
+    tour_find_by_id
     if @tour.update(tour_params)
       redirect_to tour_path(id: @tour.id)
     else
@@ -62,8 +61,8 @@ class ToursController < ApplicationController
   private
 
   def tour_params
-    params.require(:tour).permit(:tourname, :tourcontent,:tour_type,:season,
-                                  :q,spots_attributes: [:id,:spotname,:spotcontent,:images,:tour_id])
+    params.require(:tour).permit(:tourname, :tourcontent,:tour_type,:season,:tour_tags,
+                                  :q,spots_attributes: [:id,:spotname,:spotcontent,:x,:y,:evaluate,:price,:time,:spot_images,:tour_id])
   end
 
   def tour_find_by_id
