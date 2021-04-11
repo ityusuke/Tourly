@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_09_015746) do
+ActiveRecord::Schema.define(version: 2021_04_11_060606) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
@@ -84,7 +84,8 @@ ActiveRecord::Schema.define(version: 2021_04_09_015746) do
     t.string "y"
     t.integer "price"
     t.integer "time"
-    t.integer "evaluate", null: false
+    t.integer "evaluate"
+    t.string "spot_images"
     t.index ["tour_id"], name: "index_spots_on_tour_id"
   end
 
@@ -122,6 +123,7 @@ ActiveRecord::Schema.define(version: 2021_04_09_015746) do
     t.bigint "spot_id"
     t.string "season"
     t.string "tour_type"
+    t.string "tour_tags"
     t.index ["user_id", "created_at"], name: "index_tours_on_user_id_and_created_at"
     t.index ["user_id"], name: "index_tours_on_user_id"
   end

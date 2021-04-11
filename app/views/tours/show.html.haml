@@ -12,34 +12,15 @@
         .user_info
           .img_circle-show
             %img{:src => "https://lh3.googleusercontent.com/proxy/jgxxH341bFZEnTc0tgaeRFLtoser8w7U6bzRq8veLol4-HNwUGodePlZZqHK4UahYZNhPO1hjUB8MTLfrkgnLlk"}/
-          =link_to("#{@tour.user.username}さん",user_path(@tour.user.id),class:"user_nameLink" )
-        -# .card-subtitle
-        -#   .spots_section.row.border
-        -#     .col-4
-        -#       %img(src="https://internet.watch.impress.co.jp/img/iw/docs/1031/465/01_s.jpg" alt="GoogleMap")/
-        -#       -# - if @spot0.images.attached?
-        -#       -#   - @spot0.images.each do |image| 
-        -#       -#     = image_tag(image.variant(resize: '130x130').processed)
-        -#     .col-8
-        -#       -# %h4.card-title  
-        -#       -#   =@spot0.spotname
-        -#       -# %h6.card-title
-        -#       -#   =@spot0.spotcontent
-        -#   .arrows_box
-        -#     = icon 'fa','arrow-down'
-        -#   .spots_section.row.border
-        -#     .col-4
-        -#       %img(src="https://internet.watch.impress.co.jp/img/iw/docs/1031/465/01_s.jpg" alt="GoogleMap")/
-        -#       -# - if @spot1.images.attached?
-        -#       -#   - @spot1.images.each do |image| 
-        -#       -#     = image_tag(image.variant(resize: '130x130').processed)
-        -#     .col-8
-        -#       -# %h4.card-title  
-        -#       -#   =@spot1.spotname
-        -#       -# %h6.card-title
-        -#       -#   =@spot1.spotcontent
-        %h6.tourcontent-show
-          = @tour.tourcontent
+          =link_to("#{@tour.user.username}さん",user_path(@tour.user.id),class:"user_nameLink")
+        .tags_area
+          .row.flex
+            .tag_left
+              %p.tags_about タグ一覧 :
+            .tag_right.tagList
+              - for i in 0..@tour.tour_tags.split(",").length-1
+                .chip
+                  #{@tour.tour_tags.split(",")[i]}
         %h6.icons-show
           = icon "fa",'heart',class:"dislike good_icon"
           %span.likes_count #{@likes.count}
@@ -52,22 +33,43 @@
           #favorites_ajax.middleSize_btn
             =render "favorites/favorites_form"
           %button.btn.modal-trigger.middleSize_btn{"data-target" => "modalview"} コメントする
-        -if current_user == @tour.user
-          = link_to "編集",edit_tour_path(@tour.id),data: { turbolinks: false},class:"card-link"
-          = link_to "削除","/tours/#{@tour.id}",class:"card-link",method: :delete
         %ul.collapsible.popout{"data-collapsible" => "accordion"}
+          - @spots.each do |spot|
+            %li
+              .collapsible-header
+                %i.material-icons add_circle
+                = spot.spotname
+              .collapsible-body
+                .row 
+                  .col.s4 
+                    .spotimgWrap
+                      - if spot.spot_images.present?
+                        %img{:src => "#{spot.spot_images}"}
+                      - else 
+                        %img{:src => "https://chofuguide.com/wp-content/uploads/2019/08/chtoseyacafe.jpg"}
+                  .col.s8
+                    %p.spot_about 滞在時間: #{spot.time}分
+                    %p.spot_about 予算: ¥#{spot.price}
+                    %p.result-rating-rate
+                      %span.star5_rating{"data-rate" => "#{spot.evaluate}"}
+                      %span.number_rating #{spot.evaluate}
+                    %span #{spot.spotcontent}
           %li
             .collapsible-header
-              %i.material-icons> add_circle
+              %i.material-icons add_circle
               老舗料理屋「なかにし」
             .collapsible-body
-              %p.spot_about 滞在時間: 60分
-              %p.spot_about 予算: ¥1400
-              -# %img{:src => "https://lh3.googleusercontent.com/proxy/jgxxH341bFZEnTc0tgaeRFLtoser8w7U6bzRq8veLol4-HNwUGodePlZZqHK4UahYZNhPO1hjUB8MTLfrkgnLlk"}/
-              %span キンメの煮付けとナスの煮浸しが絶品です。歴史ある雰囲気で落ち着いた空間です。            
+              .row 
+                .col.s4 
+                  .spotimgWrap
+                    %img{:src => "https://chofuguide.com/wp-content/uploads/2019/08/chtoseyacafe.jpg"}
+                .col.s7.offset-s1
+                  %p.spot_about 滞在時間: 60分
+                  %p.spot_about 予算: ¥1400
+                  %span キンメの煮付けとナスの煮浸しが絶品です。歴史ある雰囲気で落ち着いた空間です。            
           %li
             .collapsible-header
-              %i.material-icons> add_circle
+              %i.material-icons add_circle
               カフェ「Callse Luvis」
             .collapsible-body
               %p.spot_about 滞在時間: 60分
@@ -76,13 +78,22 @@
               %span テラスからのオーシャンビューは最高！甘いレモネードを飲みながらまったり過ごせます。
           %li
             .collapsible-header
-              %i.material-icons> add_circle
+              %i.material-icons add_circle
               錦水館
             .collapsible-body
               %p.spot_about 滞在時間: 60分
               %p.spot_about 予算: ¥1400
               -# %img{:src => "https://lh3.googleusercontent.com/proxy/jgxxH341bFZEnTc0tgaeRFLtoser8w7U6bzRq8veLol4-HNwUGodePlZZqHK4UahYZNhPO1hjUB8MTLfrkgnLlk"}/
               %span 人気連続ドラマ「からちゃん」のロケ地で有名になった旅館です。かけ流しの温泉が身も心も癒やしてくれます。
+        %h6.tourcontent-show
+          誰と行く？: #{@tour.tour_type}
+        %h6.tourcontent-show
+          いつ行く？: #{@tour.season}
+        %h6.tourcontent-show
+          = @tour.tourcontent
+        -if current_user == @tour.user
+          = link_to "編集",edit_tour_path(@tour.id),data: { turbolinks: false},class:"card-link"
+          = link_to "削除","/tours/#{@tour.id}",class:"card-link",method: :delete
         %p.tour_createTime 作成日時：#{@tour.created_at.strftime('%m月%d日 %H時%M分' )}
   .col.s12
     .cm-wrap
@@ -96,3 +107,7 @@
 :javascript
   $('.collapsible').collapsible();
   $('.collapsible').collapsible('open', 0);
+  $('.chip').click(function(){
+    e.preventDefault();
+    return false;
+  })

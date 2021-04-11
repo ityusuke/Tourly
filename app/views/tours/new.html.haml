@@ -6,41 +6,56 @@
         = f.error_notification
         .form-inputs.form_group
           = f.label :ツアータイトル
-          = f.input :tourname,label: false,placeholder:"(例)大人の隠れ家！鎌倉カフェ巡り",                     
-            input_html: { class:"form-control mb-3" } 
+          = f.input :tourname,label: false,placeholder:"(例)大人の隠れ家！鎌倉カフェ巡り", class:"form-control mb-3" 
           .spots_section.form_group.form-inputs.border
           .card
             = f.simple_fields_for :spots do |s| 
               .spots_section.border
-                %h6.page_title.mb-3 到着地点
-                = s.label :画像
-                = s.input :images, as: :file,
-                  label: false,input_html: { class:"form-control" }  
-                = s.label :場所
-                = s.input :spotname,label: false,placeholder:"(例)井の頭公園",                                                               
-                  input_html: { class:"form-control" }
+                %h6.page_title.mb-3 スポット
+                .form-inputs.form_group
+                  = s.label :画像
+                  = s.input :spot_images, as: :file,label: false,class:"form-control" 
+                .form-inputs.form_group
+                  = s.label :場所
+                  = s.input :spotname,label: false,placeholder:"(例)井の頭公園", class:"form-control"
                 .btn-wrap.center-align
                   %a.waves-effect.waves-light.btn.tooltipped{"data-delay" => "10", "data-position" => "top", "data-tooltip" => "GoogleMapにピンを立てます"}
-                    %i.material-icons.right> search
+                    %i.material-icons.right search
                     場所を検索する
+                .form_group.range-group
+                  = s.label :評価
+                  = s.range_field :evaluate,{:max => "5", :min => "1", :type => "range", :value => "0",class:"input-range" }
+                .form_group.range-field
+                  = s.label :価格帯（円）
+                  = s.range_field :price,{:max => "10000", :min => "0", :step => "500",:type => "range", :value => "0",class:"input-range select" }
+                .form_group.range-field
+                  = s.label :滞在時間（分）
+                  = s.range_field :time,{:max => "180", :min => "0", :step => "10" ,:type => "range", :value => "0",class:"input-range select" }
                 = s.label :見どころ
-                = s.input :spotcontent,label: false,placeholder:"(例)豊かな緑と動物たち",                                                                 
-                  input_html: { class:"form-control" } 
+                = s.input :spotcontent,label: false,placeholder:"(例)豊かな緑と動物たち",class:"form-control"
           .btn-wrap.center-align
             %a.waves-effect.waves-light.btn
-              %i.material-icons.right> add_circle
+              %i.material-icons.right add_circle
               中間地点を増やす
+          .form-inputs.form_group
+            = f.label :だれと？
+            = f.input :tour_type,as: :select,label: false,prompt: "選択してください",collection:  ["一人で", "友達と" , "恋人と" , "家族と" ],  class: 'form-control select'
+          .form-inputs.form_group
+            = f.label :いつ？
+            = f.input :tour_type,as: :select,label: false,prompt: "選択してください",collection: ["3月~5月", "6月~8月" , "9月~11月" , "12月~2月" ],  class: 'form-control select'
+          -# .form-inputs
+            = f.input :tour_type,label: false,:input_html => { class: "chips chips-placeholder", id: "tags_input" } 
           .chips.chips-placeholder
-          = f.label :ツアーの説明
-          = f.input :tourcontent,label: false,placeholder:"(例)鳥取県の海産グルメを満喫できるツアーです",                    
-            input_html: { autocomplete: "tourcontent",class:"form-control"}
-          = f.button :submit, "ツアーを作る",
-            input_html: { class:" btn btn-primary　center-align " } 
+          = f.hidden_field :tour_tags, class:"tour_tags"
+          .form-inputs.form_group
+            = f.label :ツアーの説明 ,for: "tourcontent"
+            = f.input :tourcontent,label: false,placeholder:"(例)鳥取県の海産グルメを満喫できるツアーです",autocomplete: "tourcontent",class:"materialize-textarea", id: "tourcontent",data: {length: "300"}
+          = f.button :submit, "ツアーを作る",class:" btn btn-primary　center-align" ,onclick: "submitRequest()",id: "smtbtn"
   .col.s6.offset-s1
     .card
       .btn-wrap.right-align
         %a.waves-effect.waves-light.btn.red.darken-1.tooltipped{"data-delay" => "10", "data-position" => "top", "data-tooltip" => "GoogleMapのピンを削除します"}
-          %i.material-icons.right> cloud
+          %i.material-icons.right cloud
           ピンを削除する
       .gmap-wrap
         %img(src="https://internet.watch.impress.co.jp/img/iw/docs/1031/465/01_s.jpg" alt="GoogleMap")/
@@ -57,3 +72,29 @@
     placeholder: 'タグを入力',
     secondaryPlaceholder: '追加',
   });
+  $('.range-group').each(function() {
+    for (var i = 0; i < 5; i ++) {
+      $(this).append('<a>');
+    }
+  }); 
+  $('.range-group>a').eq(-5).click();
+  $('.range-group>a').on('click', function() {
+    var index = $(this).index()-1;
+    $(this).siblings().removeClass('on');
+    for (var i = 0; i < index; i++) {
+        $(this).parent().find('a').eq(i).addClass('on'); 
+    }
+    $(this).parent().find('.input-range').attr('value', index);
+  });
+  $('.chips-placeholder').material_chip({
+    placeholder: 'タグを入力してください',
+    secondaryPlaceholder: '+Tag',
+  });
+  $('#smtbtn').attr('type','button')
+
+  function submitRequest(){
+    let tags = $('#tags_input').text().replaceAll('close',',')
+    $('.tour_tags').val(tags);
+    $('#smtbtn').attr('type','submit')
+    $('#smtbtn').click();
+  }

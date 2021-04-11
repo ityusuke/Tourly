@@ -49,10 +49,11 @@
     font-size: 18px;
     padding-top: 10px;
   }
-.collapsible-body{
+  .collapsible-body{
   padding-top: 15px !important;
-}
+  }
   .action_btns{
+    width: 600px;
     display: flex;
     justify-content: space-between;
     padding-bottom: 20px;
@@ -73,6 +74,28 @@
   }
   .spot_about{
     margin: 10px auto;
+  }
+  .spotimgWrap{
+    width:180px;
+    height:180px;
+    img{
+      width:100%;
+    height:100%;
+    object-fit:cover;
+    }
+  }
+  .tags_area{
+    padding-top: 15px;
+    .chip{
+      padding: 0 18px;
+    }
+    .tags_about{
+      line-height:35px !important;
+      margin: 0;
+    }
+    .tagList{
+      margin-left: 10px !important;
+    }
   }
   .tour_createTime{
     padding-top: 10px;
@@ -98,3 +121,4 @@
     margin-left: 8px;
   }
 }
+
