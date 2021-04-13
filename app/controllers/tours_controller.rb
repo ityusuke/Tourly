@@ -4,22 +4,19 @@ class ToursController < ApplicationController
   before_action :check_user_login?, only: %i[show new create edit update destroy]
   before_action :set_search
   def index
-
-  if params[:q]
-    @q = Tour.includes(:user).ransack(params[:q])
-    @tours= @q.result(distinct: :true).page(params[:page])
-  else
-    @tours = Tour.includes(:user).page(params[:page])
-  end
+    if params[:q]
+      @q = Tour.includes(:user).ransack(params[:q])
+      @tours= @q.result(distinct: :true).page(params[:page])
+    else
+      @tours = Tour.includes(:user).page(params[:page])
+    end
+    @tags = get_all_tags
   end
 
   def show
-    tour_find_by_id
+    @tour = Tour.find_by(id: params[:id])
     @like = Like.new
-    @likes = Like.where(tour_id: @tour.id)
     @comment = Comment.new
-    @comments = Comment.where(tour_id: @tour.id)
-    puts @tour.tour_tags.split(",")
     @favorite = Favorite.new
   end
 
@@ -40,11 +37,11 @@ class ToursController < ApplicationController
   end
 
   def edit
-    tour_find_by_id
+    @tour = Tour.find_by(id: params[:id])
   end
 
   def update
-    tour_find_by_id
+    @tour = Tour.find_by(id: params[:id])
     if @tour.update(tour_params)
       redirect_to tour_path(id: @tour.id)
     else
@@ -53,21 +50,29 @@ class ToursController < ApplicationController
   end
 
   def destroy
-    tour_find_by_id
+    @tour = Tour.find_by(id: params[:id])
     @tour.destroy
     redirect_to user_path(id: current_user.id)
   end
 
   private
 
+  def get_all_tags
+    puts "dwadwdawdawdawdawdada"
+    tags = []
+    Tour.all.map {|tour|  
+      if !tour.tour_tags.nil?
+        tour.tour_tags.split(",").map {|tag|  
+          tags.push(tag)
+        }
+      end
+    } 
+    return tags.uniq
+  end
+
   def tour_params
     params.require(:tour).permit(:tourname, :tourcontent,:tour_type,:season,:tour_tags,
                                   :q,spots_attributes: [:id,:spotname,:spotcontent,:x,:y,:evaluate,:price,:time,:spot_images,:tour_id])
-  end
-
-  def tour_find_by_id
-    @tour = Tour.find_by(id: params[:id])
-    @spots = @tour.spots
   end
   
 

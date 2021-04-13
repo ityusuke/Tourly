@@ -3,8 +3,10 @@
     .card-content
       %span.card-title
         タグ検索
-      %p
-        ダミーテキストです。ダミーテキストです。ダミーテキストです。ダミーテキストです。ダミーテキストです。ダミーテキストです。ダミーテキストです。ダミーテキストです。ダミーテキストです。ダミーテキストです。ダミーテキストです。ダミーテキストです。ダミーテキストです。ダミーテキストです。ダミーテキストです。ダミーテキストです。ダミーテキストです。
+      - if tags.present?
+        - for i in 0..tags.length-1
+          .chip
+            #{tags[i]}
   .card.content-box
     .card-content
       %span.card-title

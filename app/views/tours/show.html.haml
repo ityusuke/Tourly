@@ -13,19 +13,20 @@
           .img_circle-show
             %img{:src => "https://lh3.googleusercontent.com/proxy/jgxxH341bFZEnTc0tgaeRFLtoser8w7U6bzRq8veLol4-HNwUGodePlZZqHK4UahYZNhPO1hjUB8MTLfrkgnLlk"}/
           =link_to("#{@tour.user.username}さん",user_path(@tour.user.id),class:"user_nameLink")
-        .tags_area
-          .row.flex
-            .tag_left
-              %p.tags_about タグ一覧 :
-            .tag_right.tagList
-              - for i in 0..@tour.tour_tags.split(",").length-1
-                .chip
-                  #{@tour.tour_tags.split(",")[i]}
+        - if @tour.tour_tags.present?
+          .tags_area
+            .row.flex
+              .tag_left
+                %p.tags_about タグ一覧 :
+              .tag_right.tagList
+                - for i in 0..@tour.tour_tags.split(",").length-1
+                  .chip
+                    #{@tour.tour_tags.split(",")[i]}
         %h6.icons-show
           = icon "fa",'heart',class:"dislike good_icon"
-          %span.likes_count #{@likes.count}
+          %span.likes_count #{@tour.likes.count}
           = icon "fa",'edit'
-          %span.comment_count #{@comments.count}
+          %span.comment_count #{@tour.comments.count}
         .action_btns
           #likes_ajax.middleSize_btn
             = render partial: 'likes/likes_box'
@@ -34,7 +35,7 @@
             =render "favorites/favorites_form"
           %button.btn.modal-trigger.middleSize_btn{"data-target" => "modalview"} コメントする
         %ul.collapsible.popout{"data-collapsible" => "accordion"}
-          - @spots.each do |spot|
+          - @tour.spots.each do |spot|
             %li
               .collapsible-header
                 %i.material-icons add_circle
@@ -100,10 +101,8 @@
       #comments_area
         %h6.page_title 
         コメント一覧
-        = render partial: 'comments/index',
-          locals: { comments: @comments }
-        = render partial: 'comments/form',
-          locals: { comment: @comment, tour: @tour }
+        = render 'comments/index', comments: @tour.comments 
+        = render 'comments/form', comment: @comment, tour: @tour 
 :javascript
   $('.collapsible').collapsible();
   $('.collapsible').collapsible('open', 0);

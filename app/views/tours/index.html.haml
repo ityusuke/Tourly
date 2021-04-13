@@ -1,9 +1,10 @@
 // = page_entries_info @tours
 .row.wdrap
   .col.s4.flex_sidebar
-    =render "layouts/sidebar"
+    =render "layouts/sidebar", tags: @tags 
   .container.col.s8#index_lists
     = paginate @tours
-    =render "tours/index_item"
-    =render "layouts/newbtn"
+    -@tours.each do |tour|
+      = render "tours/index_item", tour: tour 
+    = render "layouts/newbtn"
     = paginate @tours 

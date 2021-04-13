@@ -5,6 +5,22 @@
 .wdrap{
   width: 95% !important;
 }
+.mlclear-index{
+  margin: 0 !important;
+}
+.card-image .btn-floating {
+  .btn, .btn-large, .btn-flat{
+  }
+  padding: 0 1rem !important;
+  width: 120px !important;
+  height: 40px !important;
+  line-height: 40px;
+  background-color: #26a69a;
+  border-radius: 5px !important;
+}
+.tour_content-index{
+  margin-bottom: 25px !important;
+}
 .info-box{
   display: flex;
   justify-content: space-between;

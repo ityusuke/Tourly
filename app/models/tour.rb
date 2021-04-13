@@ -13,7 +13,7 @@ class Tour < ApplicationRecord
   validates :user_id, presence: true
   validates :tourcontent, presence: true, length: { maximum: 325 }
 
-
+  default_scope -> { order(created_at: :desc) }
    
 
   
