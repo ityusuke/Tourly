@@ -42,6 +42,30 @@
     object-fit: cover;
   }
 }
+.spot_deletebtn{
+  width: 180px !important;
+  height: 38px !important;
+  line-height: 38px !important;
+  padding: 0px 15px !important;
+  display: block !important;
+  margin-left: auto !important;
+  margin-bottom: -36px !important;
+}
+.spot_addbtn{
+  width: 180px !important;
+  height: 38px !important;
+  line-height: 38px !important;
+  padding: 0px 15px !important;
+  display: block !important;
+  margin-right: auto !important;
+  margin-bottom: 30px !important;
+}
+.minustop{
+  margin-top: -50px !important;
+}
+.input_top{
+  margin-bottom: 70px !important;
+}
 .right-align{
   display: block !important;
   text-align: right !important;

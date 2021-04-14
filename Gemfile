@@ -26,9 +26,11 @@ gem 'pry-rails'
 gem 'rails-i18n', '~> 5.1'
 gem 'ransack'
 gem 'rmagick'
+gem 'nested_form_fields'
+
 # easy test
 group :development, :test do
- gem 'capybara'
+  gem 'capybara'
   gem 'factory_bot_rails', '~>4.11'
   gem 'rspec-rails', '~> 3.6'
   gem 'selenium-webdriver'
@@ -41,8 +43,8 @@ gem 'simple_form'
 # image upload
 gem 'carrierwave'
 # make easier restigation and login
-gem 'devise'
-gem 'omniauth'
+gem "devise"
+gem 'omniauth', '1.9.1'
 gem 'omniauth-google-oauth2'
 # user admin gem
 gem 'cancancan'

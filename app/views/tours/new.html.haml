@@ -5,46 +5,47 @@
       = simple_form_for(@tour) do |f|
         = f.error_notification
         .form-inputs.form_group
-          = f.label :ツアータイトル
-          = f.input :tourname,label: false,placeholder:"(例)大人の隠れ家！鎌倉カフェ巡り", class:"form-control mb-3" 
+          .input_top
+            = f.label :ツアータイトル
+            = f.input :tourname,label: false,placeholder:"(例)大人の隠れ家！鎌倉カフェ巡り", class:"form-control mb-3" 
           .spots_section.form_group.form-inputs.border
-          .card
-            = f.simple_fields_for :spots do |s| 
-              .spots_section.border
-                %h6.page_title.mb-3 スポット
-                .form-inputs.form_group
-                  = s.label :画像
-                  = s.input :spot_images, as: :file,label: false,class:"form-control" 
-                .form-inputs.form_group
-                  = s.label :場所
-                  = s.input :spotname,label: false,placeholder:"(例)井の頭公園", class:"form-control"
-                .btn-wrap.center-align
-                  %a.waves-effect.waves-light.btn.tooltipped{"data-delay" => "10", "data-position" => "top", "data-tooltip" => "GoogleMapにピンを立てます"}
-                    %i.material-icons.right search
-                    場所を検索する
-                .form_group.range-group
-                  = s.label :評価
-                  = s.range_field :evaluate,{:max => "5", :min => "1", :type => "range", :value => "0",class:"input-range" }
-                .form_group.range-field
-                  = s.label :価格帯（円）
-                  = s.range_field :price,{:max => "10000", :min => "0", :step => "500",:type => "range", :value => "0",class:"input-range select" }
-                .form_group.range-field
-                  = s.label :滞在時間（分）
-                  = s.range_field :time,{:max => "180", :min => "0", :step => "10" ,:type => "range", :value => "0",class:"input-range select" }
-                = s.label :見どころ
-                = s.input :spotcontent,label: false,placeholder:"(例)豊かな緑と動物たち",class:"form-control"
-          .btn-wrap.center-align
-            %a.waves-effect.waves-light.btn
-              %i.material-icons.right add_circle
-              中間地点を増やす
+          .wrap
+            = f.nested_fields_for :spots, wrapper_tag: :div do |s| 
+              .inner
+                .card.minustop
+                  .spots_section.border
+                    %h6.page_title.mb-3 スポット
+                    .form-inputs.form_group
+                      = s.label :画像
+                      = s.input :spot_images, as: :file,label: false,class:"form-control" 
+                    .form-inputs.form_group
+                      = s.label :場所
+                      = s.input :spotname,label: false,placeholder:"(例)井の頭公園", class:"form-control"
+                    .btn-wrap.center-align
+                      %a.waves-effect.waves-light.btn.tooltipped{"data-delay" => "10", "data-position" => "top", "data-tooltip" => "GoogleMapにピンを立てます"}
+                        %i.material-icons.right search
+                        場所を検索する
+                    .form_group.range-group
+                      = s.label :評価
+                      = s.range_field :evaluate,{:max => "5", :min => "1", :type => "range", :value => "0",class:"input-range" }
+                    .form_group.range-field
+                      = s.label :価格帯（円）
+                      = s.range_field :price,{:max => "10000", :min => "0", :step => "500",:type => "range", :value => "0",class:"input-range select" }
+                    .form_group.range-field
+                      = s.label :滞在時間（分）
+                      = s.range_field :time,{:max => "180", :min => "0", :step => "10" ,:type => "range", :value => "0",class:"input-range select" }
+                    = s.label :見どころ
+                    = s.input :spotcontent,label: false,placeholder:"(例)豊かな緑と動物たち",class:"form-control"
+                = s.remove_nested_fields_link 'スポットを削除する', class: 'btn red darken-1 spot_deletebtn', role: 'button'
+          = f.add_nested_fields_link :spots, 'スポットを追加する', class: 'btn btn-wrap waves-effect waves-light spot_addbtn', role: 'button' 
           .form-inputs.form_group
             = f.label :だれと？
             = f.input :tour_type,as: :select,label: false,prompt: "選択してください",collection:  ["一人で", "友達と" , "恋人と" , "家族と" ],  class: 'form-control select'
           .form-inputs.form_group
             = f.label :いつ？
-            = f.input :tour_type,as: :select,label: false,prompt: "選択してください",collection: ["3月~5月", "6月~8月" , "9月~11月" , "12月~2月" ],  class: 'form-control select'
+            = f.input :season,as: :select,label: false,prompt: "選択してください",collection: ["3月~5月", "6月~8月" , "9月~11月" , "12月~2月" ],  class: 'form-control select'
           -# .form-inputs
-            = f.input :tour_type,label: false,:input_html => { class: "chips chips-placeholder", id: "tags_input" } 
+            = f.input :tour_tags,label: false,:input_html => { class: "chips chips-placeholder", id: "tags_input" } 
           .chips.chips-placeholder
           = f.hidden_field :tour_tags, class:"tour_tags"
           .form-inputs.form_group

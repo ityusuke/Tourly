@@ -18,6 +18,7 @@ class ToursController < ApplicationController
     @like = Like.new
     @comment = Comment.new
     @favorite = Favorite.new
+    @comments = @tour.comments
   end
 
   def new
@@ -72,7 +73,7 @@ class ToursController < ApplicationController
 
   def tour_params
     params.require(:tour).permit(:tourname, :tourcontent,:tour_type,:season,:tour_tags,
-                                  :q,spots_attributes: [:id,:spotname,:spotcontent,:x,:y,:evaluate,:price,:time,:spot_images,:tour_id])
+                                  :q,spots_attributes: [:id,:spotname,:spotcontent,:x,:y,:evaluate,:price,:time,:spot_images,:tour_id, :_destroy])
   end
   
 
