@@ -78,6 +78,14 @@ margin-bottom: 10px !important;
 .flex{
     display:flex !important;
 }
+.relative{
+    position: relative !important;
+}
+.fixed_column{
+    position: fixed !important;
+    top: 0 !important;
+    right: 0 !important;
+}
 // nav{
 //     background-color:white;
 //     border-bottom:1px gray solid;
