@@ -11,8 +11,9 @@ class UsersController < ApplicationController
     @user=User.new(user_params)
     if @user.save
       log_in @user
-      redirect_to root_path
+      redirect_to root_path, notice: 'ユーザーを登録しました'
     else
+      flash.now[:alert] = 'ユーザーの登録に失敗しました'
       render new_user_path
     end
   end
@@ -25,17 +26,19 @@ class UsersController < ApplicationController
   def update
     user_find_by_id
       if @user.update(user_params)
-      @user.username = params[:username]
+        @user.username = params[:username]
         log_in @user
-      redirect_to @user
+        redirect_to @user, notice: 'ユーザーを更新しました'
       else
-      render edit_user_path
+        flash.now[:alert] = 'ユーザーの更新に失敗しました'
+        render edit_user_path
       end
   end
 
   def destroy
     user_find_by_id
     @user.destroy
+    redirect_to root_path, notice: 'ユーザーを削除しました'
   end
 
   def show

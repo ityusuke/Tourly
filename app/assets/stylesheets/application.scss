@@ -4,6 +4,7 @@
 @import  'tours.scss';
 @import  'users.scss';
 @import  'comments.scss';
+@import  'users.scss';
 
 $color_black: #333;
 $color_white: #FFF;
@@ -100,6 +101,16 @@ margin-bottom: 10px !important;
 .right-content{
     display: inline-block;
     margin-left: auto;
+}
+.notifications {
+    color: $color_white;
+    text-align: center;  
+    .notice {
+    background-color: lightBlue;
+    }
+    .alert {
+    background-color: alert_orange;
+    }
 }
 // nav{
 //     background-color:white;
