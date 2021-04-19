@@ -5,22 +5,18 @@
         タグ検索
       - if tags.present?
         - for i in 0..tags.length-1
-          .chip
-            #{tags[i]}
+          = link_to tours_path(tag:tags[i]),class:"nav-link brand-logo" do
+            .chip
+              #{tags[i]}
+
   .card.content-box
     .card-content
       %span.card-title
-        場所検索
+        ツアー名検索
       = search_form_for @search do |f|
         .form-group
           %h6.page_title.mb-3
-            = f.search_field :tourname_cont,placeholder:"ツアー名・内容を入力",
+            = f.search_field :tourname_cont,placeholder:"ツアー名を入力",
               input_html: {class:"form-control"} 
           %h6.page_title
             = f.submit
-  .card.content-box
-    .card-content
-      %span.card-title
-        タグ検索
-      %p
-        ダミーテキストです。ダミーテキストです。ダミーテキストです。ダミーテキストです。ダミーテキストです。ダミーテキストです。ダミーテキストです。ダミーテキストです。ダミーテキストです。ダミーテキストです。ダミーテキストです。ダミーテキストです。ダミーテキストです。ダミーテキストです。ダミーテキストです。ダミーテキストです。ダミーテキストです。

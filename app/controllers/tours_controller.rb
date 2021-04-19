@@ -4,7 +4,10 @@ class ToursController < ApplicationController
   before_action :check_user_login?, only: %i[show new create edit update destroy]
   before_action :set_search
   def index
-    if params[:q]
+      
+    if params[:tag]
+      @tours= Tour.ransack(tour_tags_cont: params[:tag]).result.page(params[:page])
+    elsif params[:q]
       @q = Tour.includes(:user).ransack(params[:q])
       @tours= @q.result(distinct: :true).page(params[:page])
     else
@@ -30,9 +33,9 @@ class ToursController < ApplicationController
   def create
     puts params
     if @tour = current_user.tours.new(tour_params).save
-    
       redirect_to user_path(id: current_user.id)
     else
+      @tour = Tour.new(tour_params);
       render new_tour_path
     end
   end
@@ -59,7 +62,6 @@ class ToursController < ApplicationController
   private
 
   def get_all_tags
-    puts "dwadwdawdawdawdawdada"
     tags = []
     Tour.all.map {|tour|  
       if !tour.tour_tags.nil?

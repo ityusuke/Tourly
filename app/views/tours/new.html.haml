@@ -27,13 +27,13 @@
                         場所を検索する
                     .form_group.range-group
                       = s.label :評価
-                      = s.range_field :evaluate,{:max => "5", :min => "1", :type => "range", :value => "0",class:"input-range" }
+                      = s.range_field :evaluate,{:max => "5", :min => "1", :type => "range",class:"input-range" }
                     .form_group.range-field
                       = s.label :価格帯（円）
-                      = s.range_field :price,{:max => "10000", :min => "0", :step => "500",:type => "range", :value => "0",class:"input-range select" }
+                      = s.range_field :price,{:max => "10000", :min => "0", :step => "500",:type => "range",class:"input-range select" }
                     .form_group.range-field
                       = s.label :滞在時間（分）
-                      = s.range_field :time,{:max => "180", :min => "0", :step => "10" ,:type => "range", :value => "0",class:"input-range select" }
+                      = s.range_field :time,{:max => "180", :min => "0", :step => "10" ,:type => "range",class:"input-range select" }
                     = s.label :見どころ
                     = s.input :spotcontent,label: false,placeholder:"(例)豊かな緑と動物たち",class:"form-control"
                     = s.hidden_field :x, class:"x_lat"
@@ -69,16 +69,9 @@
           ピンを削除する
       .gmap-wrap
         #map
-        :css
-          #map {
-            height: 600px;
-            width: 600px;
-          }
-
 :javascript
-  let map
+  var map
   let geocoder
-  let markers = []
   let geos = []
   let spot_names = []
   let d
@@ -99,18 +92,16 @@
       mapTypeId: google.maps.MapTypeId.ROADMAP,
       zoom: 12
     });
-
-    drawRoute(d, r, map);
+    drawRoute();
   }
-
 
   //////////////////////////
   //drawRoute
   //Google Map上にルートを描画する
   //////////////////////////
-  function drawRoute(d, r, map) {
+  function drawRoute() {
     //マーカーが2つ以上の場合のみルートを描画する
-    if (markers.length < 2) {
+    if (geos.length < 2) {
       return false
     }
     d = new google.maps.DirectionsService(); // ルート検索オブジェクト
@@ -127,7 +118,7 @@
         strokeWeight: 3
       }
     })
-    request = createRequset(markers, geos);
+    request = createRequset();
     d.route(request, function (result, status) {
       // OKの場合ルート描画
       if (status == google.maps.DirectionsStatus.OK) {
@@ -137,33 +128,17 @@
     });
   }
 
-  ;
-  function setDistanceToHtml(result){
-    let inner = $('.inner:not(:last)')
-    let time_in = inner.find('.routeDistance');
-    let routeTime = inner.find('.routeTime');
-    let resultLegs = result.routes[0].legs;
-    if (resultLegs.length){
-      for(let m=0;m <= resultLegs.length-1;m++){
-        let leg_distance = resultLegs[m].distance;
-        let leg_duration = resultLegs[m].duration;
-        $(time_in[m]).text(leg_distance.text);
-        $(routeTime[m]).text(leg_duration.text);
-      }
-    }
-  }
-
   //////////////////////////
   //createRequset
   //Directions APIへのリクエストを生成する
   //////////////////////////
-  function createRequset(markers, geos) {
+  function createRequset() {
     //マーカーが3つ以上の場合のみ経由地点を追加する
     let origin_point = new google.maps.LatLng(geos[0].x, geos[0].y)
     let destination_point = new google.maps.LatLng(geos[geos.length - 1].x, geos[geos.length - 1].y)
     let waypoints_list = []
-    if (markers.length > 2) {
-      for (i = 1; i < markers.length - 1; i++) {
+    if (geos.length > 2) {
+      for (i = 1; i < geos.length - 1; i++) {
         waypoints_list.push({
           location: new google.maps.LatLng(geos[i].x, geos[i].y)
         });
@@ -187,34 +162,22 @@
   }
 
   //////////////////////////
-  //deleteMakers
-  //Google Map上の全マーカーを削除する
+  //setDistanceToHtml
+  //Spot間の時間と距離を算出する
   //////////////////////////
-  function deleteMakers() {
-    //生成済マーカーを順次すべて削除する
-    map = new google.maps.Map(document.getElementById('map'), {
-      center: new google.maps.LatLng(35.681382, 139.766084),
-      zoom: 12
-    });
-    $(".x_lat").each(function () {
-      $(this).val('');
-    })
-    $(".y_lat").each(function () {
-      $(this).val('');
-    })
-    markers = []; //参照を開放
-    geos = [];
-    spot_names = [];
-    $('.spots_section').find(".tour_spots_spotname input").each(function () {
-      $(this).val('');
-    })
-    let inner = $('.inner')
-    let dist_in = inner.find('.distance_input');
-    dist_in.each(function(){
-      $(this).find('span').each(function(){
-        $(this).text('-');
-      })
-    })
+  function setDistanceToHtml(result){
+    let inner = $('.inner:not(:last)')
+    let time_in = inner.find('.routeDistance');
+    let routeTime = inner.find('.routeTime');
+    let resultLegs = result.routes[0].legs;
+    if (resultLegs.length){
+      for(let m=0;m <= resultLegs.length-1;m++){
+        let leg_distance = resultLegs[m].distance;
+        let leg_duration = resultLegs[m].duration;
+        $(time_in[m]).text(leg_distance.text);
+        $(routeTime[m]).text(leg_duration.text);
+      }
+    }
   }
 
   //////////////////////////
@@ -228,24 +191,43 @@
       'address': inputAddress
     }, function (results, status) {
       if (status == 'OK') {
-        var marker = createMaker(results, map, inputAddress, spot);
+        var marker = createMaker(results, inputAddress);
         setParamsToHidden(spot, results, marker, inputAddress);
         map.setCenter(getCenterPosition());
-        if (markers.length >= 2) {
+        if (geos.length >= 2) {
           initMap();
-          redraw(geos, map, spot);
+          redraw();
         }
       } else {
-        alert('該当する結果がありませんでした：' + status);
+        alert('該当する結果がありませんでした：');
       }
     });
   })
 
   //////////////////////////
+  //redraw
+  //Map初期化時のマーカー再描画
+  //////////////////////////
+  function redraw() {  
+    for (let ix = 0; ix <= geos.length - 1; ix++) {
+      geocoder.geocode({
+        latLng: new google.maps.LatLng(geos[ix].x, geos[ix].y)
+      }, function (results, status) {
+        if (status == 'OK') {
+          map.setCenter(getCenterPosition());
+          var marker = createMaker(results, spot_names[ix]);
+        } else {
+          alert('該当する結果がありませんでした：' + status);
+        }
+      });
+    }
+  }
+
+  //////////////////////////
   //createMaker
   //マーカー生成
   //////////////////////////
-  function createMaker(results, map, inputAddress, spot) {
+  function createMaker(results, inputAddress) {
     return new google.maps.Marker({
       map: map,
       position: results[0].geometry.location,
@@ -268,25 +250,9 @@
   }
 
   //////////////////////////
-  //redraw
-  //Map初期化時のマーカー再描画
+  //getCenterPosition
+  //Mapの中心を設定する
   //////////////////////////
-  function redraw(geos, map, spot) {  
-    for (let ix = 0; ix <= geos.length - 1; ix++) {
-      geocoder.geocode({
-        latLng: new google.maps.LatLng(geos[ix].x, geos[ix].y)
-      }, function (results, status) {
-        if (status == 'OK') {
-          map.setCenter(getCenterPosition());
-          var marker = createMaker(results, map, spot_names[ix], spot);
-        } else {
-          alert('該当する結果がありませんでした：' + status);
-        }
-      });
-    }
-  }
-  
-
   function getCenterPosition(){
     if (!geos.length) {
       return new google.maps.LatLng(35.681382, 139.766084);
@@ -304,7 +270,6 @@
     let lng = location.lng();
     spot.find(".x_lat").val(lat);
     spot.find(".y_lat").val(lng);
-    markers.push(marker);
     geos.push({
       "x": lat,
       "y": lng
@@ -312,11 +277,43 @@
     spot_names.push(inputAddress);
   }
 
+  //////////////////////////
+  //deleteMakers
+  //Google Map上の全マーカーを削除する
+  //////////////////////////
+  function deleteMakers() {
+    //生成済マーカーを順次すべて削除する
+    map = new google.maps.Map(document.getElementById('map'), {
+      center: new google.maps.LatLng(35.681382, 139.766084),
+      zoom: 12
+    });
+    $(".x_lat").each(function () {
+      $(this).val('');
+    })
+    $(".y_lat").each(function () {
+      $(this).val('');
+    })
+    geos = [];
+    spot_names = [];
+    $('.spots_section').find(".tour_spots_spotname input").each(function () {
+      $(this).val('');
+    })
+    let inner = $('.inner')
+    let dist_in = inner.find('.distance_input');
+    dist_in.each(function(){
+      $(this).find('span').each(function(){
+        $(this).text('-');
+      })
+    })
+  }
+
+  //////////////////////////
+  //Mateliarizeの各種設定
+  //////////////////////////
   $('.chips-placeholder').material_chip({
     placeholder: 'タグを入力',
     secondaryPlaceholder: '追加',
   });
-
 
   $('.tooltipped').tooltip({delay: 50});
   var chip = {
@@ -346,9 +343,21 @@
   $('#smtbtn').attr('type','button')
 
   function submitRequest(){
-    let tags = $('#tags_input').text().replaceAll('close',',')
-    $('.tour_tags').val(tags);
+    try {
+      let tags_text
+      $('.chips').find('.chip').each(function(){
+        tags_text += ($(this).text()+ ",");
+      })
+      let tags = tags_text.replaceAll('close','').replaceAll('undefined','');
+      if(tags.slice(-1) === ","){
+        tags = tags.slice(0,-1);
+      } 
+      $('.tour_tags').val(tags);
+    } catch {
+      return false;
+    }finally{
     $('#smtbtn').attr('type','submit')
     $('#smtbtn').click();
+    }
   }
-%script{:async => "", :defer => "defer", :src => "https://maps.googleapis.com/maps/api/js?key=AIzaSyAAwdyb1CQwwJZA4nUyiIrH7q1Ef5qbMSA&callback=initMap"}
+
