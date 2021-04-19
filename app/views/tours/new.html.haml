@@ -34,10 +34,11 @@
                     .form_group.range-field
                       = s.label :滞在時間（分）
                       = s.range_field :time,{:max => "180", :min => "0", :step => "10" ,:type => "range",class:"input-range select" }
-                    = s.label :見どころ
-                    = s.input :spotcontent,label: false,placeholder:"(例)豊かな緑と動物たち",class:"form-control"
-                    = s.hidden_field :x, class:"x_lat"
-                    = s.hidden_field :y, class:"y_lat"
+                    .form_group.range-field
+                      = s.label :見どころ
+                      = s.input :spotcontent,label: false,placeholder:"(例)豊かな緑と動物たち",class:"form-control"
+                      = s.hidden_field :x, class:"x_lat"
+                      = s.hidden_field :y, class:"y_lat"
                     .distance_input
                       %p 
                         次のスポットまでの距離：

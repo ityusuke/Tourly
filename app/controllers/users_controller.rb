@@ -2,35 +2,30 @@
 class UsersController < ApplicationController
 
   before_action :check_user_login?, only: [:show]
-  
-  
-  def new
-   @user=User.new
-  end
 
+  def new
+  @user=User.new
+  end
   
   def create
     @user=User.new(user_params)
     if @user.save
       log_in @user
-       redirect_to root_path
+      redirect_to root_path
     else
-      #パラムスを持つユーザー
       render new_user_path
     end
   end
 
 
   def edit
-   user_find_by_id
+  user_find_by_id
   end
 
-
   def update
-     user_find_by_id
+    user_find_by_id
       if @user.update(user_params)
       @user.username = params[:username]
-   
         log_in @user
       redirect_to @user
       else
@@ -38,7 +33,6 @@ class UsersController < ApplicationController
       end
   end
 
- 
   def destroy
     user_find_by_id
     @user.destroy
@@ -72,8 +66,7 @@ class UsersController < ApplicationController
     @user = User.find_by(id: params[:id])
   end
   def user_params
-   params.require(:user).permit(:username,:email, :password,:image)
+    params.require(:user).permit(:username,:email, :password,:user_image,:comment)
   end
-  
   
 end
