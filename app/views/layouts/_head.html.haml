@@ -2,6 +2,7 @@
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
     %title Tourly
     = csrf_meta_tags
+    = include_gon 
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
     / Compiled and minified CSS
@@ -10,8 +11,9 @@
     %script{:src => "//cdn.rawgit.com/printercu/google-maps-utility-library-v3-read-only/master/infobox/src/infobox_packed.js", :type => "text/javascript"}
     %link{:href => "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css", :rel => "stylesheet"}/
     / Compiled and minified JavaScript
+    const KEY = gon.xxx_key;// 環境変数
     %script{:src => "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"}
     %link{:href => "https://fonts.googleapis.com/icon?family=Material+Icons", :rel => "stylesheet"}/
-    %script{:async => "", :defer => "defer", :src => "https://maps.googleapis.com/maps/api/js?key=AIzaSyAAwdyb1CQwwJZA4nUyiIrH7q1Ef5qbMSA&callback=initMap"}
+    %script{:async => "", :defer => "defer", :src => "https://maps.googleapis.com/maps/api/js?key=#{ENV['GMAP_API_KEY']}&callback=initMap"}
 
 
