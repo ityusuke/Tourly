@@ -1,22 +1,27 @@
-%h3
-  ユーザー編集ページ 
-= simple_form_for(@user) do |f|
-  = f.error_notification
-  .form-inputs
-    = f.input :username,                       
-      required: true,                       
-      autofocus: true,                      
-      input_html: { autocomplete: "username",class:"form-control" }
-    = f.input :email, required: true, autofocus: true,
-    input_html: {class:"form-control" }    
-    = f.input :password,                                     
-      hint: "leave it blank if you don't want to change it", 
-      required: false,                                       
-      input_html: { autocomplete: "new-password",class:"form-control" }           
-    = f.input :user_image, as: :file,
-       input_html: { class:"mb-3" } 
-  .form-actions
-    = f.button :submit, "更新する"
-%p.mt-3
-  #{link_to "アカウントを削除する","users/#{@user.id}", data: { confirm: "Are you sure?" }, method: :delete}
-= link_to "キャンセル", root_path
+.row 
+  .col.s10.offset-s1.card
+    .registForm_inner
+      %h2.page_title-userRegist ユーザー更新ページ
+      = simple_form_for(@user,html: {multipart: true}) do |f| 
+        .form-inputs.form_group
+          = f.label :おなまえ
+          = f.input :username, required: true, autofocus: true, label: false, input_html: { autocomplete: "username",class:"form-control" } 
+        .form-inputs.form_group
+          = f.label :メールアドレス
+          = f.input :email, required: true, autofocus: true, label: false, input_html: { autocomplete: "email",class:"form-control"} 
+        .form-inputs.form_group
+          = f.label :パスワード
+          = f.input :password, required: true, label: false,                                                                       
+            hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length), 
+            input_html: { autocomplete: "new-password",class:"form-control" }                                          
+        .form-inputs.form_group
+          = f.label :画像
+          = f.input :user_image, as: :file,label: false,class:"form-control" 
+        .form_group.range-field
+          = f.label :ひとこと
+          = f.input :comment,label: false,placeholder:"お酒と旅行が大好きです！",class:"form-control"
+        .form-actions
+          = f.button :submit, "更新する"
+      %p.mt-3
+        =link_to "アカウントを削除する",user_path(@user.id), data: { confirm: "本当に削除してよろしいですか?"}, method: :delete
+      = link_to "キャンセル", root_path
