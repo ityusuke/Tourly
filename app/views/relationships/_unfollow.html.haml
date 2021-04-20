@@ -1,4 +1,0 @@
-.follow_box.container
-  = form_for(current_user.relationships.find_by(follow_id: user.id), html: { method: :delete }, remote: true   ) do |f|
-    = f.hidden_field :follow_id, value: user.id
-    = f.submit 'フォロー中', class: 'follow_button btn btn-primary ml-0'
