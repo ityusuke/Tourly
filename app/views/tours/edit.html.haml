@@ -54,10 +54,9 @@
           .form-inputs.form_group
             = f.label :いつ？
             = f.input :season,as: :select,label: false,prompt: "選択してください",collection: ["3月~5月", "6月~8月" , "9月~11月" , "12月~2月" ],  class: 'form-control select'
-          -# .form-inputs
-            = f.input :tour_tags,label: false,:input_html => { class: "chips chips-placeholder", id: "tags_input" } 
-          .chips.chips-placeholder
-          = f.hidden_field :tour_tags, class:"tour_tags"
+          = f.label :タグ
+          .chips.chips-placeholder#input_chip
+          = f.hidden_field :tour_tags, class:"tour_tags hidden_area"
           .form-inputs.form_group
             = f.label :ツアーの説明 ,for: "tourcontent"
             = f.input :tourcontent,label: false,placeholder:"(例)鳥取県の海産グルメを満喫できるツアーです",autocomplete: "tourcontent",class:"materialize-textarea", id: "tourcontent",data: {length: "300"}
@@ -320,24 +319,24 @@
   //////////////////////////
   //Mateliarizeの各種設定
   //////////////////////////
-  $('.chips-placeholder').material_chip({
-    placeholder: 'タグを入力',
-    secondaryPlaceholder: '追加',
+  $('.tooltipped').tooltip({delay: 50});
+  $('#input_chip').removeClass('chips-placeholder');
+  $('#input_chip').addClass('chips-initial');
+  let chips_array = [];
+  let tags_array = $('.tour_tags').val().split(',');
+  tags_array.map(function(item){
+    chips_array.push({tag:item});
+  })
+  $('.chips-initial').material_chip({
+    data: chips_array,
   });
 
-  $('.tooltipped').tooltip({delay: 50});
-  var chip = {
-    tag: 'chip content',
-    image: '', //optional
-    id: 1, //optional
-  };
-
+  //評価入力欄の制御
   $('.range-group').each(function() {
     for (var i = 0; i < 5; i ++) {
       $(this).append('<a>');
     }
   }); 
-  $('.range-group>a').eq(-5).click();
   $('.range-group>a').on('click', function() {
     var index = $(this).index()-1;
     $(this).siblings().removeClass('on');
@@ -346,12 +345,14 @@
     }
     $(this).parent().find('.input-range').attr('value', index);
   });
-  $('.chips-placeholder').material_chip({
-    placeholder: 'タグを入力してください',
-    secondaryPlaceholder: '+Tag',
-  });
-  $('#smtbtn').attr('type','button')
+    $('.range-group').each(function(){
+    let evaluate = Number($('.range-group').find('input').val());
+    $(this).find('a').eq(evaluate-1).click();
+  })
 
+
+  //submit時の設定
+  $('#smtbtn').attr('type','button')
   function submitRequest(){
     let tags = $('#tags_input').text().replaceAll('close',',')
     $('.tour_tags').val(tags);
