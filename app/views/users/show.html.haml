@@ -10,12 +10,6 @@
         .user-data
           %h6.user-name
             = @user.username
-          %h6
-            フォロー:
-            = link_to(@user.followings.count,followings_user_path(@user.id))
-          %h6
-            フォロワー：
-            = link_to(@user.followers.count,followers_user_path(@user.id))
       %p #{@user.comment}
       = link_to edit_user_path(@user.id) do
         = icon 'fa','edit'

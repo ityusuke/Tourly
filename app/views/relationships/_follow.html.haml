@@ -1,4 +1,0 @@
-.follow_box.container
-  = form_for(current_user.relationships.build,remote: true) do |f|
-    = f.hidden_field :follow_id, value: user.id
-    = f.submit 'フォロー', class: 'follow_button btn btn-primary ml-0'
