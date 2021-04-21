@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.1'
-gem 'mysql2', '~> 0.4.10'
+gem 'mysql2'
 
 # AWS
 gem 'aws-partitions', '~> 1.8'

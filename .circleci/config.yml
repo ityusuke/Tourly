@@ -12,7 +12,7 @@ jobs:
           RAILS_ENV: test
           DB_HOST: 127.0.0.1
           DB_USERNAME: 'root'
-          DB_PASSWORD: ''
+          DB_PASSWORD: 'password'
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -40,6 +40,11 @@ jobs:
           paths:
             - ./vendor/bundle
           key: v1-dependencie-{{ checksum "Gemfile.lock" }}
+
+    - run:
+        name: Install redis-cli
+        command: |
+          sudo yum install mysql-devel
 
       - run:
           name: Wait for DB
