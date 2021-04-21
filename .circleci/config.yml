@@ -43,8 +43,7 @@ jobs:
 
       - run:
           name: Install redis-cli
-          command: |
-            sudo yum install mysql-devel
+          command: apt-get install libmysqlclient-dev
 
       - run:
           name: Wait for DB
