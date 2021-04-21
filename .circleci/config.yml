@@ -27,9 +27,9 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
-          - v1-dependencie-{{ checksum "Gemfile.lock" }}
+          - v1-dependendent-{{ checksum "Gemfile.lock" }}
           # fallback to using the latest cache if no exact match is found
-          - v1-dependencie-
+          - v1-dependendent-
 
       - run:
           name: install dependencies
@@ -39,13 +39,13 @@ jobs:
       - save_cache:
           paths:
             - ./vendor/bundle
-          key: v1-dependencie-{{ checksum "Gemfile.lock" }}
+          key: v1-dependendent-{{ checksum "Gemfile.lock" }}
 
       - run:
           name: Install redis-cli
           command: |
             sudo apt-get update -qq
-            sudo apt-get install -y build-essential
+            sudo apt-get install -y default-mysql-client
 
       - run:
           name: Wait for DB
