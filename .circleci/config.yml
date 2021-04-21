@@ -41,10 +41,10 @@ jobs:
             - ./vendor/bundle
           key: v1-dependencie-{{ checksum "Gemfile.lock" }}
 
-    - run:
-        name: Install redis-cli
-        command: |
-          sudo yum install mysql-devel
+      - run:
+          name: Install redis-cli
+          command: |
+            sudo yum install mysql-devel
 
       - run:
           name: Wait for DB
