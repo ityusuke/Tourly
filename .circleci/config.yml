@@ -24,12 +24,18 @@ jobs:
     steps:
       - checkout
 
+      - run:
+          name: Install default-mysql-client
+          command: |
+            sudo apt-get update -qq
+            sudo apt-get install -y default-mysql-client
+
       # Download and cache dependencies
       - restore_cache:
           keys:
-          - v1-dependendent-{{ checksum "Gemfile.lock" }}
+          - v1-dependenden-{{ checksum "Gemfile.lock" }}
           # fallback to using the latest cache if no exact match is found
-          - v1-dependendent-
+          - v1-dependenden-
 
       - run:
           name: install dependencies
@@ -39,13 +45,7 @@ jobs:
       - save_cache:
           paths:
             - ./vendor/bundle
-          key: v1-dependendent-{{ checksum "Gemfile.lock" }}
-
-      - run:
-          name: Install redis-cli
-          command: |
-            sudo apt-get update -qq
-            sudo apt-get install -y default-mysql-client
+          key: v1-dependenden-{{ checksum "Gemfile.lock" }}
 
       - run:
           name: Wait for DB
