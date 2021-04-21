@@ -46,8 +46,6 @@ jobs:
           command: |
             sudo apt-get update -qq
             sudo apt-get install -y build-essential
-            sudo mariadb-client       
-            sudo nodejs 
 
       - run:
           name: Wait for DB
