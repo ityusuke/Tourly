@@ -16,3 +16,10 @@ ja:
           one: "<b>%{count}</b>ツアー表示中です "
           other: "<b>%{count}</b>ツアー表示中です "
           zero: "ツアーが見つかりません "
+  activerecord:
+    attributes:
+      tour: 
+        tourname: ツアー名
+        tourcontent: ツアー内容
+      spot: 
+        spotname: スポット名
