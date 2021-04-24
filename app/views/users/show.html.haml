@@ -3,21 +3,14 @@
     .card.user-profille
       .profile-inner
         .user-img
-          - if @user.image.attached?
-            = image_tag(@user.image.variant(resize: '150x150').processed)
+          - if !@user.user_image.nil?
+            %img{:src => "#{@user.user_image}"}/
           - else 
             %img{:src => "https://www.naaavi.com/memo/wp-content/uploads/2020/08/html-imgtag-eyecatch.gif"}/
         .user-data
           %h6.user-name
             = @user.username
-          %h6
-            フォロー:
-            = link_to(@user.followings.count,followings_user_path(@user.id))
-          %h6
-            フォロワー：
-            = link_to(@user.followers.count,followers_user_path(@user.id))
-      %p
-        ダミーテキストです。ダミーテキストです。ダミーテキストです。ダミーテキストです。ダミーテキストです。ダミーテキストです。ダミーテキストです。ダミーテキストです。ダミーテキストです。ダミーテキストです。ダミーテキストです。ダミーテキストです。ダミーテキストです。ダミーテキストです。ダミーテキストです。ダミーテキストです。ダミーテキストです。ダミーテキストです。ダミーテキストです。ダミーテキストです。
+      %p #{@user.comment}
       = link_to edit_user_path(@user.id) do
         = icon 'fa','edit'
         ユーザー情報を編集する
@@ -42,31 +35,7 @@
     -if @tours.count == 0
       %p.text-center.mt-3 投稿したツアーはありません
     -@tours.each do |tour|
-      .card.content-box
-        .card-image
-          %img{:src => "https://www.naaavi.com/memo/wp-content/uploads/2020/08/html-imgtag-eyecatch.gif"}/
-        .card-content
-          %span.card-title.text-left.tour-title ダミーのツアーです。ダミーのツアーです。ダミーのツアーです。ダミーのツアーです。ダミーのツアーです。
-          %p.tour-text ダミーテキストです。ダミーテキストです。ダミーテキストです。ダミーテキストです。ダミーテキストです。ダミーテキストです。ダミーテキストです。ダミーテキストです。ダミーテキストです。ダミーテキストです。ダミーテキストです。ダミーテキストです。
-          = link_to "詳しくみる",tour_path(tour.id),class:"card-link"
-          .info-box
-            .info-text.create-time
-              %small 作成日時：#{tour.created_at.strftime('%m月%d日 %H時%M分' )}
-            .info-text
-              %small製作者:
-              =link_to("#{tour.user.username}さん",user_path(tour.user.id))
-      .card.content-box
-        .card-body.tour-item-show
-          %span.card-title.text-left.tour-title
-            = tour.tourname
-          %h6.card-subtitle.mb-2.text-muted 
-            %small製作者:
-            =link_to(tour.user.username,user_path(tour.user.id))
-          %p.card-text
-            = truncate(tour.tourcontent,separator: '.',lendth:40) do
-              =link_to("続きを読む",tour_path(tour.id))
-          = link_to "詳しくみる",tour_path(tour.id),class:"card-link links ml-0"
-          -if current_user == tour.user
-            = link_to "編集する",edit_tour_path(tour.id),data: { turbolinks: false},class:"card-link links"
-            = link_to "削除する","/tours/#{tour.id}",class:"card-link links",method: :delete
+      = render "tours/index_item", tour: tour 
+        
+            
 

@@ -1,19 +1,23 @@
-%h2.page_title ユーザー登録ページ
-= simple_form_for(@user,html: {multipart: true}) do |f| 
-  .form-inputs.form_group
-    = f.input :username,                       
-      required: true,                       
-      autofocus: true,                      
-      input_html: { autocomplete: "username",class:"form-control" } 
-    = f.input :email,                       
-      required: true,                       
-      autofocus: true,                      
-      input_html: { autocomplete: "email",class:"form-control"} 
-    = f.input :password,                                                                    
-      required: true,                                                                       
-      hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length), 
-      input_html: { autocomplete: "new-password",class:"form-control" }                                          
-    = f.input :image, as: :file
-    = f.button :submit, "登録する",
-    input_html: { class:" btn btn-primary " } 
-  = link_to 'Signin with Google',user_google_omniauth_authorize_path
+.row 
+  .col.s10.offset-s1.card
+    .registForm_inner
+      %h2.page_title-userRegist ユーザー登録ページ
+      = simple_form_for(@user,html: {multipart: true}) do |f| 
+        .form-inputs.form_group
+          = f.label :おなまえ
+          = f.input :username, required: true, autofocus: true, label: false, input_html: { autocomplete: "username",class:"form-control" } 
+        .form-inputs.form_group
+          = f.label :メールアドレス
+          = f.input :email, required: true, autofocus: true, label: false, input_html: { autocomplete: "email",class:"form-control"} 
+        .form-inputs.form_group
+          = f.label :パスワード
+          = f.input :password, required: true, label: false,                                                                       
+            hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length), 
+            input_html: { autocomplete: "new-password",class:"form-control" }                                          
+        .form-inputs.form_group
+          = f.label :画像
+          = f.input :user_image, as: :file,label: false,class:"form-control" 
+        .form_group.range-field
+          = f.label :ひとこと
+          = f.input :comment,label: false,placeholder:"お酒と旅行が大好きです！",class:"form-control"
+        = f.button :submit, "登録する",input_html: { class:" btn btn-primary " } 

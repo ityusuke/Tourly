@@ -1,8 +1,4 @@
 -if current_user 
   .fixed-action-btn.horizontal
-    = link_to new_tour_path,data: { turbolinks: false,delay: "10",position: "top", tooltip: "Tourを投稿する" },class:"btn-floating btn-large red pulse tooltipped" do
+    = link_to new_tour_path,data: { turbolinks: false,delay: "10",position: "top", tooltip: "Tourを投稿する" },class:"btn-floating btn-large orange darken-1 pulse tooltipped" do
       %i.large.material-icons mode_edit
-:javascript
-  $(document).ready(function(){
-    $('.tooltipped').tooltip({delay: 50});
-  });

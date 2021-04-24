@@ -31,3 +31,36 @@ justify-content: start;
     font-size: 22px;
   }
 }
+.page_title-userRegist{
+  padding-bottom: 30px;
+}
+.registForm_inner{
+  padding: 55px;
+  padding-top: 20px;
+}
+.modal-content{
+  h4,p{
+    color: #333;
+    text-align: center;
+    padding-bottom: 30px;
+  }
+  a{
+    display: block !important;
+    color: #fff !important;
+    width: 60% !important;
+    height: 40px !important;
+    line-height: 40px !important;
+    margin: 20px auto !important;
+    margin-bottom: 40px !important;
+  }
+}
+.small_modal{
+  width: 550px !important;
+  // .modal-content{
+  //   padding-bottom: 0 !important;
+  // }
+  .modal-footer{
+    margin-top: -35px !important;
+    margin-left: -20px !important;
+  }
+}

@@ -22,14 +22,14 @@ class User < ApplicationRecord
   validates :email, presence: true, uniqueness: true
   validates :password, presence: true, length: { maximum: 15, minimum: 4 },
                       confirmation: true, exclusion: { in: %w($ # % & ' ( ) ' =) }
-  has_one_attached :image
+  mount_uploader :user_image, UserImageUploader
 
   if Rails.env.production?
     S3_CREDENTIALS={access_key_id: ENV['AWS_S3_ACCESS_ID'],
-       secret_access_key: ENV['AWS_S3_ACCESS_KEY'], 
-       bucket: ENV['AWS_S3_BUCKET_NAME'], 
-       s3_host_name: "s3-ap-northeast-1.amazonaws.com",
-       s3_region: ENV['AWS_REGION']}
+      secret_access_key: ENV['AWS_S3_ACCESS_KEY'], 
+      bucket: ENV['AWS_S3_BUCKET_NAME'], 
+      s3_host_name: "s3-ap-northeast-1.amazonaws.com",
+      s3_region: ENV['AWS_REGION']}
   end
 
 

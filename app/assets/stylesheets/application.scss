@@ -4,9 +4,14 @@
 @import  'tours.scss';
 @import  'users.scss';
 @import  'comments.scss';
+@import  'users.scss';
 
 $color_black: #333;
 $color_white: #FFF;
+
+body{
+    font-family: "Hiragino Maru Gothic ProN" !important;
+}
 
 a:hover{
     opacity: 0.8;
@@ -68,7 +73,45 @@ margin-bottom: 10px !important;
         line-height: 64px !important;
     }
 }
-
+.select{
+    display: block !important;
+}
+.flex{
+    display:flex !important;
+}
+.relative{
+    position: relative !important;
+}
+.fixed_column{
+    position: fixed !important;
+    top: 0 !important;
+    right: 0 !important;
+}
+.gmap-wrap{
+    width: 100%;
+    height: 600px;
+    #map {
+        width: 100%;
+        height: 100%;
+    }
+}
+.hidden_area{
+    display: none !important;
+}
+.right-content{
+    display: inline-block;
+    margin-left: auto;
+}
+.notifications {
+    color: $color_white;
+    text-align: center;  
+    .notice {
+    background-color: lightBlue;
+    }
+    .alert {
+    background-color: alert_orange;
+    }
+}
 // nav{
 //     background-color:white;
 //     border-bottom:1px gray solid;

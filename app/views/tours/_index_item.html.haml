@@ -1,31 +1,33 @@
--@tours.each do |tour|
-  .card.content-box
-    .card-image
-      %img{:src => "https://www.naaavi.com/memo/wp-content/uploads/2020/08/html-imgtag-eyecatch.gif"}/
-      %a.btn-floating.halfway-fab.waves-effect.waves-light.red{"data-delay" => "50", "data-position" => "bottom", "data-tooltip" => "I am a tooltip"} 
-        %i.large.material-icons zoom_in  
-    .card-content
-      %span.card-title.text-left.tour-title ダミーのツアーです。ダミーのツアーです。ダミーのツアーです。ダミーのツアーです。ダミーのツアーです。
-      %p.tour-text ダミーテキストです。ダミーテキストです。ダミーテキストです。ダミーテキストです。ダミーテキストです。ダミーテキストです。ダミーテキストです。ダミーテキストです。ダミーテキストです。ダミーテキストです。ダミーテキストです。ダミーテキストです。
-      = link_to "詳しくみる",tour_path(tour.id),class:"card-link"
-      .info-box
-        .info-text.create-time
-          %small 作成日時：#{tour.created_at.strftime('%m月%d日 %H時%M分' )}
-        .info-text
-          %small製作者:
-          =link_to("#{tour.user.username}さん",user_path(tour.user.id))
 
-  .card.content-box
-    .card-content
-      %h4.card-title 
-        #{tour.tourname}
-      %h6.card-subtitle.mb-2.text-muted 
-      %p.card-text{"data-placement" => "top", "data-toggle" => "tooltip", "title" => "#{tour.tourcontent}"}
-        = truncate(tour.tourcontent,separator: '.',lendth:40) do
-          =link_to("続きを読む",tour_path(tour.id))
-      = link_to "詳細",tour_path(tour.id),class:"card-link"
+.card.content-box
+  .card-image
+    %img{:src => "https://www.naaavi.com/memo/wp-content/uploads/2020/08/html-imgtag-eyecatch.gif"}/
+    = link_to "詳しくみる",tour_path(tour.id),class:" btn-floating halfway-fab red btn red darken-1"
+  .card-content
+    %h4.card-title 
+      #{tour.tourname}
+    .user_info
+      .img_circle-show
+        %img{:src => "https://lh3.googleusercontent.com/proxy/jgxxH341bFZEnTc0tgaeRFLtoser8w7U6bzRq8veLol4-HNwUGodePlZZqHK4UahYZNhPO1hjUB8MTLfrkgnLlk"}/
+      =link_to("#{tour.user.username}さん",user_path(tour.user.id),class:"user_nameLink")
+    %h6.card-subtitle.mb-2.text-muted 
+    %p.card-text.tour_content-index{"data-placement" => "top", "data-toggle" => "tooltip", "title" => "#{tour.tourcontent}"}
+      = truncate(tour.tourcontent,separator: '.',lendth:40) do
+        =link_to("続きを読む",tour_path(tour.id))
+    .tags_area
+      .row.flex.mlclear-index
+        .tag_left
+          %p.tags_about タグ一覧 :
+        .tag_right.tagList
+          - if tour.tour_tags.present?
+            - for i in 0..tour.tour_tags.split(",").length-1
+              .chip
+                #{tour.tour_tags.split(",")[i]}
+    .info-box
+      %h6.icons-show
+        = icon "fa",'heart',class:"dislike good_icon"
+        %span.likes_count #{tour.likes.count}
+        = icon "fa",'edit'
+        %span.comment_count #{tour.comments.count}
       .text-right
         %small 作成日時：#{tour.created_at.strftime('%m月%d日 %H時%M分' )}
-      .text-right
-        %small製作者:
-        =link_to("#{tour.user.username}さん",user_path(tour.user.id))

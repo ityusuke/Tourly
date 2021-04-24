@@ -9,11 +9,11 @@ class Tour < ApplicationRecord
   has_many :users, through: :favorites, dependent: :destroy
   has_many :spots, dependent: :destroy,inverse_of: :tour
 
-  accepts_nested_attributes_for :spots
+  accepts_nested_attributes_for :spots, allow_destroy: true
   validates :user_id, presence: true
   validates :tourcontent, presence: true, length: { maximum: 325 }
 
-
+  default_scope -> { order(created_at: :desc) }
    
 
   

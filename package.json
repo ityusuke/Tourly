@@ -1,5 +1,7 @@
 {
   "name": "new_app2",
   "private": true,
-  "dependencies": {}
+  "dependencies": {
+    "@nathanvda/cocoon": "^1.2.14"
+  }
 }

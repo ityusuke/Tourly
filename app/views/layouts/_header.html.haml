@@ -1,75 +1,39 @@
-%header
-  -# %nav.navbar.navbar-expand-lg.navbar-light.bg-light
-  -#   %a.navbar-brand{:href => "/"} tourly
-  -#   %button.navbar-toggler{"aria-controls" => "navbarSupportedContent", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-target" => "#navbarSupportedContent", "data-toggle" => "collapse", :type => "button"}
-  -#     %span.navbar-toggler-icon
-  -#   #navbarSupportedContent.collapse.navbar-collapse
-  -#     %ul.navbar-nav.mr-auto
-  -#       %li.nav-item
-  -#         = link_to about_path,class:"nav-link" do
-  -#           = icon "fa",'print'
-  -#           Tourlyとは
-
-        -# %li.nav-item
-        -#   = link_to "/search",class:"nav-link" do
-        -#     = icon "fa",'search '
-        -#     Tour検索
-        -# %li.nav-item
-        -#   = link_to tours_path,class:"nav-link" do
-        -#     = icon "fa",'plane'
-        -#     Tour一覧
-        -# -if current_user  
-        -#   %li.nav-item
-        -#     = link_to new_tour_path,data: { turbolinks: false},class:"nav-link"do
-        -#       = icon "fa",'edit'
-        -#       tourをつくる
-        -#   %li.nav-item
-        -#     = link_to user_path(current_user.id),class:"nav-link" do
-        -#       = icon "fa",'users'
-        -#       マイページ          
-        -# -else
-        -#   %li.nav-item
-        -#     = link_to login_path,class:"nav-link " do
-        -#       = icon "fa","pencil-ruler"
-        -#       ログイン
-        -#   %li.nav-item
-        -#     = link_to new_user_path,class:"nav-link" do
-        -#       = icon "fa","pen-nib"
-        -#       新規登録
-        -#   %li.nav-item
-        -#     = link_to "/test_login",method: :post,class:"nav-link" do
-        -#       = icon 'fa','sign-in-alt'
-        -#       テストユーザーでログイン
-
-  %ul#dropdown1.dropdown-content
-    -if current_user  
-      %li.nav-item
-        = link_to new_tour_path,data: { turbolinks: false},class:"nav-link" do
-          tourをつくる
-      %li.nav-item
-        = link_to user_path(current_user.id),class:"nav-link" do
-          マイページ 
-      %li.nav-item
-        = link_to logout_path, method: :delete,class:"links" do
-          ログアウト
-    -else  
-      %li
-        = link_to "/test_login",method: :post,class:"nav-link" do
-          テストユーザーでログイン
-      %li.divider
-      %li
-        = link_to login_path,class:"nav-link " do
-          ログイン
-      %li.divider
-      %li
-        = link_to new_user_path,class:"nav-link" do
-          新規登録
+%header  
   %nav
     .nav-wrapper.inner-content
       = link_to tours_path,class:"nav-link brand-logo" do
         Tourly
       %ul.right.hide-on-med-and-down
-        %li 
-          %a.dropdown-button{"data-activates" => "dropdown1", :href => "#"} 
-            ログイン
-            %i.material-icons.right arrow_drop_down
+        %li
+          / Modal Trigger
+          %a.modal-trigger{:href => "#modal1"} ログイン
+          / Modal Structure
+          #modal1.modal.small_modal{:style => "width: 550px;"}
+            .modal-content
+              %h4 ログインメニュー
+              -if current_user  
+                .header_inner
+                  = link_to new_tour_path,data: { turbolinks: false},class:"btn" do
+                    tourをつくる
+                  = link_to user_path(current_user.id),class:"btn light-blue darken-1" do
+                    マイページ 
+                  = link_to logout_path, method: :delete,class:"btn red darken-1" do
+                    ログアウト
+              -else  
+                .header_inner
+                  = link_to "/test_login",method: :post,class:"btn" do
+                    テストユーザーでログイン
+                  = link_to login_path,class:"btn light-blue darken-1" do
+                    ログイン
+                  = link_to new_user_path,class:"btn red darken-1" do
+                    新規登録
+            .modal-footer
+              %a.modal-action.modal-close.waves-effect.waves-green.btn-flat{:href => "#modal1"} 閉じる
+:javascript
+  $('#modal1').modal();
+  $('.modal-action , .modal-trigger').click(function(e){
+    e.preventDefault();
+    if(!$('#modal1').hasClass('open')){
+      $('#modal1').modal('open');
+    }
+  })
