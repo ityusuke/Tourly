@@ -44,6 +44,8 @@ class UsersController < ApplicationController
   def show
     user_find_by_id
     @tours = Tour.where(user_id: @user.id)
+    @like_tours = Tour.includes(:likes).references(:likes).where("likes.user_id = ?", @user.id)
+    @favorite_tours = Tour.includes(:favorites).references(:favorites).where("favorites.user_id = ?", @user.id)
     @favorites = Favorite.where(user_id: @user.id)
   end
 
