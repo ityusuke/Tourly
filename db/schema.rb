@@ -75,7 +75,6 @@ ActiveRecord::Schema.define(version: 2021_04_20_112532) do
     t.integer "price"
     t.integer "time"
     t.integer "evaluate"
-    t.string "spot_images"
     t.index ["tour_id"], name: "index_spots_on_tour_id"
   end
 

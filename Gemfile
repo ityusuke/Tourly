@@ -121,6 +121,9 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: %i[mingw mswin jruby]
 
-group :production, :staging do
+# group :production, :staging do
+#     gem 'unicorn'
+# end
+group :production do
     gem 'unicorn'
 end
