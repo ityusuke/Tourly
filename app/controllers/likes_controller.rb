@@ -2,11 +2,15 @@
 
 class LikesController < ApplicationController
   before_action :check_user_login?, only: %i[create destroy]
+
+  def count
+    @tour = Tour.find_by(id: params[:tour_id])
+    render json: @tour.likes.count
+  end
   
   def create
     @tour = Tour.find_by(id: params[:tour_id])
     @like = Like.create(user_id: current_user.id, tour_id: @tour.id)
-    puts "this is like"
     @likes = Like.where(tour_id: @tour.id)
     @comments = Comment.where(tour_id: @tour.id)
     # redirect_back(fallback_location: root_path)

@@ -1,5 +1,19 @@
-$('#comment_form').html("<%= j(render partial: 'comments/index') %>");
+var comment_form = document.getElementById("comment_form");
+var comment_count = document.getElementById('comment_count');
+comment_form.innerHTML="<%= j(render partial: 'comments/index') %>";  
+fetch('/tours/<%= @tour.id %>/comments/count',{
+  mode: 'cors',
+  method: 'GET',
+  headers: {
+    Authorization: "Token",
+    "Content-Type": "application/json"
+  }
+}).then(response => response.json())
+.then(data => {
+  console.log(data);
+  comment_count.textContent=String(data);
+}).catch(e => {
+  console.log(e);
+})
 $('.form-inputs input[type=text]').val("");
 $('.modal').modal('close');
-var count = $('.comment_count').text();
-$('.comment_count').text(String(Number(count)+1));

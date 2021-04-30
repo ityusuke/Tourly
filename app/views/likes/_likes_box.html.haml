@@ -1,7 +1,3 @@
--# = icon "fa",'heart',class:"dislike"
--# = @likes.count
--# = icon "fa",'edit'
--# = @comments.count
 -if @like.id != nil && liked?(@tour)
   = link_to tour_like_path(@tour.id,@like.id),method: :delete,remote: :true,class: "btn red darken-1",onclick: "Materialize.toast('いいねを解除しました', 3000)"  do
     いいね解除
@@ -9,4 +5,3 @@
   - puts @tour.id
   = link_to tour_likes_path(@tour.id),method: :post,remote: :true,class: "btn red darken-1",onclick: "Materialize.toast('いいねを追加しました', 3000)" do
     いいね追加
-  

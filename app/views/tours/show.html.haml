@@ -23,10 +23,10 @@
                   .chip
                     #{@tour.tour_tags.split(",")[i]}
         %h6.icons-show
-          = icon "fa",'heart',class:"dislike good_icon"
-          %span.likes_count #{@tour.likes.count}
+          = icon "fa",'heart',class:"like good_icon"
+          %span.likes_count#likes_count #{@tour.likes.count}
           = icon "fa",'edit'
-          %span.comment_count #{@tour.comments.count}
+          %span.comment_count#comment_count #{@tour.comments.count}
         .action_btns
           #likes_ajax.middleSize_btn
             = render partial: 'likes/likes_box'

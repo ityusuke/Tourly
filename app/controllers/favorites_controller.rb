@@ -3,6 +3,7 @@
 class FavoritesController < ApplicationController
   def create
     @tour = Tour.find_by(id: params[:tour_id])
+    @comments = Comment.where(tour_id: @tour.id)
     if @favorite = Favorite.create(user_id: current_user.id, tour_id: params[:tour_id])
       flash.now[:notice] = 'お気に入りしました'
       puts "controller"
@@ -16,6 +17,7 @@ class FavoritesController < ApplicationController
   def destroy
     @like =Like.new
     @tour = Tour.find(params[:id])
+    @comments = Comment.where(tour_id: @tour.id)
     @favorite = current_user.favorites.find_by(tour_id: params[:tour_id])
     @favorite.destroy
     flash.now[:notice] = 'お気に入りしました'
