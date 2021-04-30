@@ -41,9 +41,3 @@
       -else
         -@like_tours.each do |tour|
           = render "tours/index_item", tour: tour
-:javascript
-  $('.tab').click(function(e){
-    e.preventDefault();
-    $('.tabs').tabs();
-  })
-

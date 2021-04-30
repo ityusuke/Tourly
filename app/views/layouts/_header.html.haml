@@ -29,11 +29,4 @@
                     新規登録
             .modal-footer
               %a.modal-action.modal-close.waves-effect.waves-green.btn-flat{:href => "#modal1"} 閉じる
-:javascript
-  $('#modal1').modal();
-  $('.modal-action , .modal-trigger').click(function(e){
-    e.preventDefault();
-    if(!$('#modal1').hasClass('open')){
-      $('#modal1').modal('open');
-    }
-  })
+= javascript_include_tag 'common/entire.js' 
