@@ -1,4 +1,3 @@
-
 #modalview.modal
   .modal-content
     %h3.commentForm_heading コメント投稿画面
@@ -17,24 +16,4 @@
         .action_btns-between
           = f.submit "コメントする",class:"btn btn-primary comment_submit waves-effect waves-light btn",onclick: "Materialize.toast('コメントを投稿しました', 3000)"
           %button.modal-close.btn.red.darken-1.actionbtn{:onclick => "modalClose"} 閉じる
-
-
-:javascript
-  $('.range-group').each(function() {
-    for (var i = 0; i < 5; i ++) {
-      $(this).append('<a>');
-    }
-  }); 
-  $('.range-group>a').eq(-5).click();
-  $('.range-group>a').on('click', function() {
-    var index = $(this).index()-1;
-    $(this).siblings().removeClass('on');
-    for (var i = 0; i < index; i++) {
-        $(this).parent().find('a').eq(i).addClass('on'); 
-    }
-    $(this).parent().find('.input-range').attr('value', index);
-  });
-  $('.modal').modal();
-  function modalClose(){
-    $('.modal').modal('close');
-  }
+= javascript_include_tag 'comments/form.js' 

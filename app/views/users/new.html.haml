@@ -11,8 +11,7 @@
           = f.input :email, required: true, autofocus: true, label: false, input_html: { autocomplete: "email",class:"form-control"} 
         .form-inputs.form_group
           = f.label :パスワード
-          = f.input :password, required: true, label: false,                                                                       
-            hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length), 
+          = f.input :password, required: true, label: false, hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length), 
             input_html: { autocomplete: "new-password",class:"form-control" }                                          
         .form-inputs.form_group
           = f.label :画像
