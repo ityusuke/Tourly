@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.2.1'
-gem 'mysql2', '~> 0.4.10'
+gem 'rails', '~> 6.0'
+gem 'mysql2'
 
 # AWS
 gem 'aws-partitions', '~> 1.8'
@@ -17,21 +17,21 @@ gem 'dotenv-rails'
 
 gem 'font-awesome-sass', '~> 5.4.1'
 gem 'mini_magick', '~> 4.8'
-gem 'acts-as-taggable-on', '~> 4.0'
+gem 'acts-as-taggable-on'
 # テストデータの作成
 gem 'faker'
 gem 'gimei'
 
 # ページネーション
-gem 'kaminari', '~> 0.17.0'
-gem 'kaminari-bootstrap', '~> 3.0.1'
+gem 'kaminari'
+gem 'kaminari-bootstrap'
 
 # デバッグ
 gem 'pry-byebug'
 gem 'pry-rails'
 
 # 多言語対応
-gem 'rails-i18n', '~> 5.1'
+gem 'rails-i18n'
 
 # 検索機能
 gem 'ransack'
@@ -83,7 +83,7 @@ gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
-gem 'coffee-rails', '~> 4.2'
+gem 'coffee-rails'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
@@ -116,11 +116,14 @@ end
 
 group :production do
   gem 'rails_12factor'
-  gem 'mysql2', '~> 0.4.10'
+  gem 'mysql2'
 end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: %i[mingw mswin jruby]
 
-group :production, :staging do
+# group :production, :staging do
+#     gem 'unicorn'
+# end
+group :production do
     gem 'unicorn'
 end
