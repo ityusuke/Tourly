@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   }
   resources :users, only: %i[new create show edit update destroy follow]
   resources :tours, only: %i[index new create show
-                             edit update destroy]
+                            edit update destroy]
   resources :relationships, only: %i[create destroy]
 
   resources :users do
@@ -27,5 +27,7 @@ Rails.application.routes.draw do
     resources :likes, only: %i[create destroy]
     resources :favorites, only: %i[create destroy]
     resources :comments, only: %i[create destroy]
+    get '/likes/count', to: 'likes#count'
+    get '/comments/count', to: 'comments#count'
   end
 end
