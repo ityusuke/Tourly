@@ -11,7 +11,10 @@
           =@tour.tourname
         .user_info
           .img_circle-show
-            %img{:src => "https://lh3.googleusercontent.com/proxy/jgxxH341bFZEnTc0tgaeRFLtoser8w7U6bzRq8veLol4-HNwUGodePlZZqHK4UahYZNhPO1hjUB8MTLfrkgnLlk"}/
+            - if @tour.user.user_image.present?
+              %img{:src => "#{@tour.user.user_image}"}/
+            - else 
+              %img{:src => "/assets/noUser.jpg"}/
           =link_to("#{@tour.user.username}さん",user_path(@tour.user.id),class:"user_nameLink")
         - if @tour.tour_tags.present?
           .tags_area
