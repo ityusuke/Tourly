@@ -3,10 +3,10 @@
     .card.user-profille
       .profile-inner
         .user-img
-          - if !@user.user_image.nil?
+          - if @user.user_image.present?
             %img{:src => "#{@user.user_image}"}/
           - else 
-            %img{:src => "https://www.naaavi.com/memo/wp-content/uploads/2020/08/html-imgtag-eyecatch.gif"}/
+            %img{:src => "/assets/noUser.jpg"}/
         .user-data
           %h6.user-name
             = @user.username

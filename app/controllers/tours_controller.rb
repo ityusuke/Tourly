@@ -27,15 +27,15 @@ class ToursController < ApplicationController
   def new
     @tour = Tour.new
     @spots = @tour.spots.build 
-    @tour_type = [{ "1": "一人で"}, { "2": "友達と" }, { "3": "恋人と" }, { "4": "家族と" }]
+    @tour_type = TOUR_TYPE_ARRAY
   end
 
   def create
-    puts params
-    if @tour = current_user.tours.new(tour_params).save
-      redirect_to user_path(id: current_user.id), notice: 'ツアーを登録しました'
+    @tour = current_user.tours.new(tour_params)
+    if @tour.save
+      redirect_to user_path(id: current_user.id), notice: FLASH_TOUR_NEW_SUCCESS
     else
-      flash.now[:alert] = 'ツアーの登録に失敗しました'
+      flash.now[:alert] = FLASH_TOUR_NEW_FAILED
       @tour = Tour.new(tour_params);
       render new_tour_path
     end
@@ -48,9 +48,9 @@ class ToursController < ApplicationController
   def update
     @tour = Tour.find_by(id: params[:id])
     if @tour.update(tour_params)
-      redirect_to tour_path(id: @tour.id), notice: 'ツアーを更新しました'
+      redirect_to tour_path(id: @tour.id), notice: FLASH_TOUR_EDIT_SUCCESS
     else
-      flash.now[:alert] = 'ツアーの更新に失敗しました'
+      flash.now[:alert] = FLASH_TOUR_EDIT_FAILED
       render edit_tour_path
     end
   end
@@ -58,7 +58,7 @@ class ToursController < ApplicationController
   def destroy
     @tour = Tour.find_by(id: params[:id])
     @tour.destroy
-    redirect_to user_path(id: current_user.id), notice: 'ツアーを削除しました'
+    redirect_to user_path(id: current_user.id), notice: FLASH_TOUR_DELETE_SUCCESS
   end
 
   private
@@ -67,7 +67,7 @@ class ToursController < ApplicationController
     tags = []
     Tour.all.map {|tour|  
       if !tour.tour_tags.nil?
-        tour.tour_tags.split(",").map {|tag|  
+        tour.tour_tags.split(SPLIT_WITH_COMMA).map {|tag|  
           tags.push(tag)
         }
       end

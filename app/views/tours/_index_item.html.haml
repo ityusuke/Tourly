@@ -1,14 +1,20 @@
 
 .card.content-box
   .card-image
-    %img{:src => "https://www.naaavi.com/memo/wp-content/uploads/2020/08/html-imgtag-eyecatch.gif"}/
+    - if tour.spots.present? && tour.spots[0].spot_images.present?
+      %img{:src => tour.spots[0].spot_images}/
+    - else
+      %img{:src => "/assets/noImage.jpg"}/
     = link_to "詳しくみる",tour_path(tour.id),class:" btn-floating halfway-fab red btn red darken-1"
   .card-content
     %h4.card-title 
       #{tour.tourname}
     .user_info
       .img_circle-show
-        %img{:src => "https://lh3.googleusercontent.com/proxy/jgxxH341bFZEnTc0tgaeRFLtoser8w7U6bzRq8veLol4-HNwUGodePlZZqHK4UahYZNhPO1hjUB8MTLfrkgnLlk"}/
+        - if tour.user.user_image.present?
+          %img{:src => tour.user.user_image}/
+        - else
+          %img{:src => "/assets/noUser.jpg"}/
       =link_to("#{tour.user.username}さん",user_path(tour.user.id),class:"user_nameLink")
     %h6.card-subtitle.mb-2.text-muted 
     %p.card-text.tour_content-index{"data-placement" => "top", "data-toggle" => "tooltip", "title" => "#{tour.tourcontent}"}

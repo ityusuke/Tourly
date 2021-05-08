@@ -282,8 +282,8 @@ window.onload = function () {
   }
 
   //submit時の設定
-  $('#smtbtn').attr('type','button')
-  function submitRequest(){
+  $('#smtbtn').attr('type','button');
+  $('#smtbtn').on('click', function() {
     try {
       let tags_text
       $('.chips').find('.chip').each(function(){
@@ -300,6 +300,6 @@ window.onload = function () {
     $('#smtbtn').attr('type','submit')
     $('#smtbtn').click();
     }
-  }
+  });
 
 }
