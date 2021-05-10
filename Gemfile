@@ -38,9 +38,9 @@ gem 'ransack'
 gem 'rmagick'
 gem 'nested_form_fields'
 
-group :development do
-  gem 'rubocop', require: false
-end
+gem 'rubocop', require: false
+gem 'rubocop-rails', require:false
+
 group :test do
   gem 'rspec_junit_formatter'
 end
