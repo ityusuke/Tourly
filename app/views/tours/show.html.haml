@@ -8,11 +8,14 @@
     .card
       .card-body
         %h4.tourtitle-show
-          =@tour.tourname
+          = @tour.tourname
         .user_info
           .img_circle-show
-            %img{:src => "https://lh3.googleusercontent.com/proxy/jgxxH341bFZEnTc0tgaeRFLtoser8w7U6bzRq8veLol4-HNwUGodePlZZqHK4UahYZNhPO1hjUB8MTLfrkgnLlk"}/
-          =link_to("#{@tour.user.username}さん",user_path(@tour.user.id),class:"user_nameLink")
+            - if @tour.user.user_image.present?
+              %img{:src => "#{@tour.user.user_image}"}/
+            - else 
+              %img{:src => "/assets/noUser.jpg"}/
+          = link_to("#{@tour.user.username}さん",user_path(@tour.user.id),class:"user_nameLink")
         - if @tour.tour_tags.present?
           .tags_area
             .row.flex
@@ -23,10 +26,10 @@
                   .chip
                     #{@tour.tour_tags.split(",")[i]}
         %h6.icons-show
-          = icon "fa",'heart',class:"dislike good_icon"
-          %span.likes_count #{@tour.likes.count}
+          = icon "fa",'heart',class:"like good_icon"
+          %span.likes_count#likes_count #{@tour.likes.count}
           = icon "fa",'edit'
-          %span.comment_count #{@tour.comments.count}
+          %span.comment_count#comment_count #{@tour.comments.count}
         .action_btns
           #likes_ajax.middleSize_btn
             = render partial: 'likes/likes_box'
@@ -65,38 +68,6 @@
                         次のスポットまでの時間：               
                         %span.routeTime -
                     %span 見どころ: #{spot.spotcontent}
-                  
-          %li
-            .collapsible-header
-              %i.material-icons add_circle
-              老舗料理屋「なかにし」
-            .collapsible-body
-              .row 
-                .col.s4 
-                  .spotimgWrap
-                    %img{:src => "https://chofuguide.com/wp-content/uploads/2019/08/chtoseyacafe.jpg"}
-                .col.s7.offset-s1
-                  %p.spot_about 滞在時間: 60分
-                  %p.spot_about 予算: ¥1400
-                  %span キンメの煮付けとナスの煮浸しが絶品です。歴史ある雰囲気で落ち着いた空間です。            
-          %li
-            .collapsible-header
-              %i.material-icons add_circle
-              カフェ「Callse Luvis」
-            .collapsible-body
-              %p.spot_about 滞在時間: 60分
-              %p.spot_about 予算: ¥1400
-              -# %img{:src => "https://lh3.googleusercontent.com/proxy/jgxxH341bFZEnTc0tgaeRFLtoser8w7U6bzRq8veLol4-HNwUGodePlZZqHK4UahYZNhPO1hjUB8MTLfrkgnLlk"}/
-              %span テラスからのオーシャンビューは最高！甘いレモネードを飲みながらまったり過ごせます。
-          %li
-            .collapsible-header
-              %i.material-icons add_circle
-              錦水館
-            .collapsible-body
-              %p.spot_about 滞在時間: 60分
-              %p.spot_about 予算: ¥1400
-              -# %img{:src => "https://lh3.googleusercontent.com/proxy/jgxxH341bFZEnTc0tgaeRFLtoser8w7U6bzRq8veLol4-HNwUGodePlZZqHK4UahYZNhPO1hjUB8MTLfrkgnLlk"}/
-              %span 人気連続ドラマ「からちゃん」のロケ地で有名になった旅館です。かけ流しの温泉が身も心も癒やしてくれます。
         .tags_area
           .row.flex.mlclear-index
             .tag_left
@@ -123,183 +94,4 @@
         コメント一覧
         = render 'comments/index', comments: @tour.comments 
         = render 'comments/form', comment: @comment, tour: @tour 
-:javascript
-  var map
-  let geocoder
-  let geos = []
-  let spot_names = []
-  let d
-  let r
-  var request
-  
-  $('.spot_item').find('.collapsible-header .spot_name').each(function(){
-    spot_names.push($(this).text());
-  })
-  $('.spot_item').find('.hidden_area').each(function(){
-    geos.push({x: $(this).find('.spot_x').text(), y: $(this).find('.spot_y').text()});
-  })
-  initMap();
-
-  //////////////////////////
-  //initMap
-  //Mapを初期化する
-  //////////////////////////
-  function initMap() {
-    geocoder = new google.maps.Geocoder()
-    map = new google.maps.Map(document.getElementById('map'), {
-      center: getCenterPosition(),
-      mapTypeId: google.maps.MapTypeId.ROADMAP,
-      zoom: 12
-    });
-    drawRoute();
-    redraw();
-  }
-
-  //////////////////////////
-  //drawRoute
-  //Google Map上にルートを描画する
-  //////////////////////////
-  function drawRoute() {
-    //マーカーが2つ以上の場合のみルートを描画する
-    if (geos.length < 2) {
-      return false
-    }
-    d = new google.maps.DirectionsService(); // ルート検索オブジェクト
-    r = new google.maps.DirectionsRenderer({ // ルート描画オブジェクト
-      map: map, // 描画先の地図
-      preserveViewport: true, // 描画後に中心点をずらさない
-    });
-    r.setOptions({
-      suppressMarkers: true,
-      draggable: true,
-      polylineOptions: {
-        strokeColor: '#ff0000',
-        strokeOpacity: 1,
-        strokeWeight: 3
-      }
-    })
-    request = createRequset();
-    d.route(request, function (result, status) {
-      // OKの場合ルート描画
-      if (status == google.maps.DirectionsStatus.OK) {
-        r.setDirections(result);
-        setDistanceToHtml(result)
-      }
-    });
-  }
-
-  //////////////////////////
-  //createRequset
-  //Directions APIへのリクエストを生成する
-  //////////////////////////
-  function createRequset() {
-    //マーカーが3つ以上の場合のみ経由地点を追加する
-    let origin_point = new google.maps.LatLng(geos[0].x, geos[0].y)
-    let destination_point = new google.maps.LatLng(geos[geos.length - 1].x, geos[geos.length - 1].y)
-    let waypoints_list = []
-    if (geos.length > 2) {
-      for (i = 1; i < geos.length - 1; i++) {
-        waypoints_list.push({
-          location: new google.maps.LatLng(geos[i].x, geos[i].y)
-        });
-      }
-      var request = {
-        origin: {
-          location: origin_point
-        }, // 出発地
-        destination: destination_point, // 目的地
-        waypoints: waypoints_list,
-        travelMode: google.maps.DirectionsTravelMode.DRIVING, // 交通手段(歩行。DRIVINGの場合は車)
-      };
-    } else {
-      var request = {
-        origin: origin_point, // 出発地
-        destination: destination_point, // 目的地
-        travelMode: google.maps.DirectionsTravelMode.DRIVING, // 交通手段(歩行。DRIVINGの場合は車),
-      };
-    }
-    return request;
-  }
-
-  //////////////////////////
-  //setDistanceToHtml
-  //Spot間の時間と距離を算出する
-  //////////////////////////
-  function setDistanceToHtml(result){
-    let inner = $('.inner:not(:last)')
-    let time_in = inner.find('.routeDistance');
-    let routeTime = inner.find('.routeTime');
-    let resultLegs = result.routes[0].legs;
-    if (resultLegs.length){
-      for(let m=0;m <= resultLegs.length-1;m++){
-        let leg_distance = resultLegs[m].distance;
-        let leg_duration = resultLegs[m].duration;
-        $(time_in[m]).text(leg_distance.text);
-        $(routeTime[m]).text(leg_duration.text);
-      }
-    }
-  }
-
-  //////////////////////////
-  //redraw
-  //Map初期化時のマーカー再描画
-  //////////////////////////
-  function redraw() {  
-    for (let ix = 0; ix <= geos.length - 1; ix++) {
-      geocoder.geocode({
-        latLng: new google.maps.LatLng(geos[ix].x, geos[ix].y)
-      }, function (results, status) {
-        if (status == 'OK') {
-          map.setCenter(getCenterPosition());
-          var marker = createMaker(results, spot_names[ix]);
-        } else {
-          alert('該当する結果がありませんでした：' + status);
-        }
-      });
-    }
-  }
-
-  //////////////////////////
-  //createMaker
-  //マーカー生成
-  //////////////////////////
-  function createMaker(results, inputAddress) {
-    return new google.maps.Marker({
-      map: map,
-      position: results[0].geometry.location,
-      icon: {
-        fillColor: "blue",
-        fillOpacity: 0.8,
-        path: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
-        scale: 6,
-        strokeColor: "blue",
-        strokeWeight: 1.0
-      },
-      label: {
-        text: inputAddress, //ラベル文字
-        color: 'red', //文字の色
-        fontSize: '16px', //文字のサイズ
-        fontWeight: '600' //文字の太さ
-      },
-      animation: google.maps.Animation.DROP
-    });
-  }
-
-  //////////////////////////
-  //getCenterPosition
-  //Mapの中心を設定する
-  //////////////////////////
-  function getCenterPosition(){
-    if (!geos.length) {
-      return new google.maps.LatLng(35.681382, 139.766084);
-    } else {
-      return new google.maps.LatLng(geos[geos.length - 1].x, geos[geos.length - 1].y);
-    }
-  }
-
-  $('.collapsible').collapsible();
-  $('.collapsible').collapsible('open', 0);
-  $('.chip').click(function(){
-    e.preventDefault();
-    return false;
-  })
+= javascript_include_tag 'tours/show.js' 

@@ -5,11 +5,14 @@
         Tourly
       %ul.right.hide-on-med-and-down
         %li
+          = link_to map_search_path,class:"a" do
+            MAP検索
+        %li
           / Modal Trigger
           %a.modal-trigger{:href => "#modal1"} ログイン
           / Modal Structure
           #modal1.modal.small_modal{:style => "width: 550px;"}
-            .modal-content
+            .modal-content.menu-content
               %h4 ログインメニュー
               -if current_user  
                 .header_inner
@@ -29,11 +32,4 @@
                     新規登録
             .modal-footer
               %a.modal-action.modal-close.waves-effect.waves-green.btn-flat{:href => "#modal1"} 閉じる
-:javascript
-  $('#modal1').modal();
-  $('.modal-action , .modal-trigger').click(function(e){
-    e.preventDefault();
-    if(!$('#modal1').hasClass('open')){
-      $('#modal1').modal('open');
-    }
-  })
+= javascript_include_tag 'common/entire.js' 

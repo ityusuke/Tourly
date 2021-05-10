@@ -8,6 +8,8 @@
           = link_to tours_path(tag:tags[i]),class:"nav-link brand-logo" do
             .chip
               #{tags[i]}
+      - else
+        %p タグが存在しません
 
   .card.content-box
     .card-content
@@ -19,4 +21,4 @@
             = f.search_field :tourname_cont,placeholder:"ツアー名を入力",
               input_html: {class:"form-control"} 
           %h6.page_title
-            = f.submit
+            = f.submit "検索する"

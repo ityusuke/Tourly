@@ -1,5 +1,17 @@
-$('#likes_ajax').html("<%= j(render partial: 'likes/likes_box', locals: {tour: @tour}) %>");
-var count = $('.likes_count').text();
-$('.likes_count').text(String(Number(count)-1));
-$('.good_icon').removeClass('like');
-$('.good_icon').addClass('dislike');
+var like_form = document.getElementById("likes_ajax");
+var likes_count = document.getElementById('likes_count');
+like_form.innerHTML="<%= j(render partial: 'likes/likes_box') %>";  
+
+fetch('/tours/<%= @tour.id %>/likes/count',{
+  mode: 'cors',
+  method: 'GET',
+  headers: {
+    Authorization: "Token",
+    "Content-Type": "application/json"
+  }
+}).then(response => response.json())
+.then(data => {
+  likes_count.textContent=String(data)
+}).catch(e => {
+  console.log(e);
+})

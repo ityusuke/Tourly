@@ -10,12 +10,10 @@ class Tour < ApplicationRecord
   has_many :spots, dependent: :destroy,inverse_of: :tour
 
   accepts_nested_attributes_for :spots, allow_destroy: true
-  validates :user_id, presence: true
-  validates :tourcontent, presence: true, length: { maximum: 325 }
+    # validates :user_id, presence: true, length: { maximum: 30 }
+    validates :tourname, presence: true, length: { maximum: 30 }
 
   default_scope -> { order(created_at: :desc) }
-   
-
   
   def self.search(search)
     return Tour.all unless search

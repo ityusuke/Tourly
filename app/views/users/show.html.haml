@@ -3,10 +3,10 @@
     .card.user-profille
       .profile-inner
         .user-img
-          - if !@user.user_image.nil?
+          - if @user.user_image.present?
             %img{:src => "#{@user.user_image}"}/
           - else 
-            %img{:src => "https://www.naaavi.com/memo/wp-content/uploads/2020/08/html-imgtag-eyecatch.gif"}/
+            %img{:src => "/assets/noUser.jpg"}/
         .user-data
           %h6.user-name
             = @user.username
@@ -16,26 +16,28 @@
         ユーザー情報を編集する
   .container.col.s8
     =render "layouts/newbtn"
-    =link_to favorite_user_path(@user.id),class:"links" do
-      = icon 'fa','book'
-      お気に入りリスト
-    -# = render('relationships/follow_form',user: @user) 
     %ul#tabs-swipe-demo.tabs
       %li.tab.col.s3
-        %a{:href => "#test-swipe-1"} 投稿したTour
+        %a.active{:href => "#test-swipe-1"} 投稿したツアー
       %li.tab.col.s3
-        %a.active{:href => "#test-swipe-2"} いいねしたTour
+        %a{:href => "#test-swipe-2"} お気に入りしたツアー
       %li.tab.col.s3
-        =link_to favorite_user_path(@user.id),class:"links" do
-          = icon 'fa','book'
-          お気に入りリスト
-    #test-swipe-1.col.s12.blue Test 1
-    #test-swipe-2.col.s12.red Test 2
-    #test-swipe-3.col.s12.green Test 3
-    -if @tours.count == 0
-      %p.text-center.mt-3 投稿したツアーはありません
-    -@tours.each do |tour|
-      = render "tours/index_item", tour: tour 
-        
-            
-
+        %a{:href => "#test-swipe-3"} いいねしたツアー
+    #test-swipe-1.col.s12
+      -if @tours.empty?
+        %p.text-center.mt-3 投稿したツアーはありません
+      -else
+        -@tours.each do |tour|
+          = render "tours/index_item", tour: tour
+    #test-swipe-2.col.s12
+      -if @favorite_tours.empty?
+        %p.text-center.mt-3 お気に入りしたツアーはありません
+      -else
+        -@favorite_tours.each do |tour|
+          = render "tours/index_item", tour: tour
+    #test-swipe-3.col.s12
+      -if @like_tours.empty?
+        %p.text-center.mt-3 いいねしたツアーはありません
+      -else
+        -@like_tours.each do |tour|
+          = render "tours/index_item", tour: tour
