@@ -48,7 +48,7 @@ end
 group :development, :test do
   gem 'capybara'
   gem 'factory_bot_rails', '~>4.11'
-  gem 'rspec-rails', '~> 3.6'
+  gem 'rspec-rails'
   gem 'selenium-webdriver'
 end
 # 管理者権限
