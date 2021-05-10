@@ -1,6 +1,6 @@
 window.onload = function () {
   $('#modal1').modal();
-  $('.modal-action , .modal-trigger').click(function(e){
+  $('nav').find('.modal-action , .modal-trigger').click(function(e){
     e.preventDefault();
     if(!$('#modal1').hasClass('open')){
       $('#modal1').modal('open');

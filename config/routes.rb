@@ -3,9 +3,8 @@
 Rails.application.routes.draw do
   
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
-  root 'static_pages#home'
-  get '/about' => 'static_pages#about'
-  get '/search' => 'static_pages#search'
+  root 'tours#index'
+  get 'map_search',   to: 'spots#map'
   get     'login',   to: 'sessions#new'
   post    'login',   to: 'sessions#create'
   post    '/test_login',   to: 'sessions#test_login'
@@ -23,6 +22,7 @@ Rails.application.routes.draw do
       get :followings, :followers, :favorite
     end
   end
+  resources :spots, only: %i[show]
   resources :tours do
     resources :likes, only: %i[create destroy]
     resources :favorites, only: %i[create destroy]

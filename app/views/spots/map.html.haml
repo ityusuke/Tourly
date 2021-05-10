@@ -1,0 +1,196 @@
+.row
+  .col.s10.offset-s1
+    %h2.page_title.mb-2 MAP検索
+    %p マップ上のピンをクリックすることで、スポットの詳細情報が確認できます
+    .position_formArea
+      .form-inputs.form_group
+        %p 現在地の検索
+        %input{"placeholder" =>"(例)井の頭公園", "class" => "form-control input_spotname", "id" => "search_input"}
+      .btn-wrap.center-align
+        %a.waves-effect.waves-light.btn.tooltipped.searchMaps{"data-delay" => "10", "data-position" => "top", "data-tooltip" => "GoogleMapにピンを立てます"}
+          %i.material-icons.right search
+          現在地を検索する
+    .card
+      .gmap-wrap
+        #map
+.hiddenParams_area
+  %p#json-target-js 
+    = @spots
+.modal#map_modal
+  .spot_detailArea
+    .modal-content
+      .row
+        .col.s10.offset-s1
+          %h6.spot__detailTitle#spot_title 老舗料理屋「なかにし」
+          .spot_datailImgWrap
+            %img{:src => "assets/noImage.jpg"}
+          .between_items
+            .between_item
+              %p.spot__detailAbout#spot_time 滞在時間: 60分
+            .between_item
+              %p.spot__detailAbout#spot_price 予算: ¥1400
+          .range-group
+            %span.number_rating 
+          %span.spot__detailAbout.spot_content#spot_content キンメの煮付けとナスの煮浸しが絶品です。歴史ある雰囲気で落ち着いた空間です。
+          .between_items
+            .between_item
+              %a.btn#link_TourDatail{:href => "#"} ツアーの詳細をみる
+            .between_item
+              %button.modal-close.btn.red.darken-1.actionbtn.spot_datailCloseBtn{:onclick => "modalClose"} 閉じる   
+          
+
+:javascript
+  var map
+  var jsonObj = JSON.parse($('#json-target-js').text());
+
+  //MAPの初期化
+  initMap();
+
+  //スポット情報の評価項目制御
+  $('.range-group').each(function() {
+    for (var i = 0; i < 5; i ++) {
+      $(this).append('<a>');
+    }
+  }); 
+  $('.range-group>a').on('click', function() {
+    var index = $(this).index()-1;
+    $(this).siblings().removeClass('on');
+    for (var i = 0; i < index; i++) {
+        $(this).parent().find('a').eq(i).addClass('on'); 
+    }
+    $(this).parent().find('.input-range').attr('value', index);
+  });
+
+  //モーダルの制御
+  $('#map_modal').modal();
+  function modalClose(){
+    $('#map_modal').modal('close');
+  }
+
+  //////////////////////////
+  //initMap
+  //Mapを初期化する
+  //////////////////////////
+  function initMap() {
+    geocoder = new google.maps.Geocoder()
+    map = new google.maps.Map(document.getElementById('map'), {
+      center: getCenterPosition(),
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
+      zoom: 12
+    });
+    redraw();
+  }
+
+  //////////////////////////
+  //redraw
+  //Map初期化時のマーカー再描画
+  //////////////////////////
+  function redraw() {  
+    for (let ix = 0; ix <= jsonObj.length - 1; ix++) {
+      geocoder.geocode({
+        latLng: new google.maps.LatLng(jsonObj[ix].x, jsonObj[ix].y)
+      }, function (results, status) {
+        if (status == 'OK') {
+          map.setCenter(getCenterPosition());
+          var marker = createMaker(results, jsonObj[ix].spotname);
+          //マーカークリック時にツアー詳細情報のモーダル表示するよう設定
+          google.maps.event.addListener(marker, 'click', (function(url){
+            return function(){ 
+              $('#map_modal').modal('open');
+              $('#link_TourDatail').attr('href', url);
+
+              //スポット情報を非同期で取得
+              fetch(`/spots/${jsonObj[ix].id}`,{
+                mode: 'cors',
+                method: 'GET',
+                headers: {
+                  Authorization: "Token",
+                  "Content-Type": "application/json"
+                }
+              }).then(response => response.json())
+              .then(data => {
+                
+                //fetchしたツアー情報をモーダルへ反映する
+                $('#spot_title').text(data.spotname);
+                $('#spot_price').text(`予算:${data.price}円`);
+                $('#spot_time').text(`滞在時間: ${data.time}分`);
+                $('#spot_content').text(`見どころ: ${data.spotcontent}`);
+                
+                if(data.spot_images.url !== null){
+                  $('.spot_datailImgWrap').find('img').attr('src',data.spot_images.url);
+                } else{
+                  $('.spot_datailImgWrap').find('img').attr('src',"assets/noImage.jpg");
+                }
+                $('.range-group').each(function(){
+                  let evaluate = Number(data.evaluate);
+                  console.log(evaluate);
+                  $(this).find('a').eq(evaluate-1).click();
+                })
+                
+              }).catch(e => {
+                console.log(e);
+              })
+            };
+          })("/tours/" + jsonObj[ix].tour_id));
+        } else {
+          console.log('該当する結果がありませんでした：' + status);
+        }
+      });
+    }
+  }
+
+  //////////////////////////
+  //createMaker
+  //マーカー生成
+  //////////////////////////
+  function createMaker(results, inputAddress) {
+    return new google.maps.Marker({
+      map: map,
+      position: results[0].geometry.location,
+      icon: {
+        fillColor: "blue",
+        fillOpacity: 0.8,
+        path: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
+        scale: 6,
+        strokeColor: "blue",
+        strokeWeight: 1.0
+      },
+      label: {
+        text: inputAddress, //ラベル文字
+        color: 'red', //文字の色
+        fontSize: '16px', //文字のサイズ
+        fontWeight: '600' //文字の太さ
+      },
+      animation: google.maps.Animation.DROP
+    });
+  }
+
+  //////////////////////////
+  //getCenterPosition
+  //Mapの中心を設定する
+  //////////////////////////
+  function getCenterPosition(){
+    if (!jsonObj.length) {
+      return new google.maps.LatLng(35.681382, 139.766084);
+    } 
+    else {
+      return new google.maps.LatLng(35.681382, 139.766084);
+    }
+  }
+
+  //////////////////////////
+  //searchPlace
+  //Google Mapの検索処理を行う
+  //////////////////////////
+  $(document).on('click','.searchMaps',function searchPlace() {
+    let inputAddress = $('#search_input').val();
+    geocoder.geocode({
+      'address': inputAddress
+    }, function (results, status) {
+      if (status == 'OK') {
+        map.setCenter(results[0].geometry.location);
+      } else {
+        alert('該当する結果がありませんでした：');
+      }
+    });
+  })
