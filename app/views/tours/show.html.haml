@@ -8,14 +8,14 @@
     .card
       .card-body
         %h4.tourtitle-show
-          =@tour.tourname
+          = @tour.tourname
         .user_info
           .img_circle-show
             - if @tour.user.user_image.present?
               %img{:src => "#{@tour.user.user_image}"}/
             - else 
               %img{:src => "/assets/noUser.jpg"}/
-          =link_to("#{@tour.user.username}さん",user_path(@tour.user.id),class:"user_nameLink")
+          = link_to("#{@tour.user.username}さん",user_path(@tour.user.id),class:"user_nameLink")
         - if @tour.tour_tags.present?
           .tags_area
             .row.flex
@@ -68,38 +68,6 @@
                         次のスポットまでの時間：               
                         %span.routeTime -
                     %span 見どころ: #{spot.spotcontent}
-                  
-          %li
-            .collapsible-header
-              %i.material-icons add_circle
-              老舗料理屋「なかにし」
-            .collapsible-body
-              .row 
-                .col.s4 
-                  .spotimgWrap
-                    %img{:src => "https://chofuguide.com/wp-content/uploads/2019/08/chtoseyacafe.jpg"}
-                .col.s7.offset-s1
-                  %p.spot_about 滞在時間: 60分
-                  %p.spot_about 予算: ¥1400
-                  %span キンメの煮付けとナスの煮浸しが絶品です。歴史ある雰囲気で落ち着いた空間です。            
-          %li
-            .collapsible-header
-              %i.material-icons add_circle
-              カフェ「Callse Luvis」
-            .collapsible-body
-              %p.spot_about 滞在時間: 60分
-              %p.spot_about 予算: ¥1400
-              -# %img{:src => "https://lh3.googleusercontent.com/proxy/jgxxH341bFZEnTc0tgaeRFLtoser8w7U6bzRq8veLol4-HNwUGodePlZZqHK4UahYZNhPO1hjUB8MTLfrkgnLlk"}/
-              %span テラスからのオーシャンビューは最高！甘いレモネードを飲みながらまったり過ごせます。
-          %li
-            .collapsible-header
-              %i.material-icons add_circle
-              錦水館
-            .collapsible-body
-              %p.spot_about 滞在時間: 60分
-              %p.spot_about 予算: ¥1400
-              -# %img{:src => "https://lh3.googleusercontent.com/proxy/jgxxH341bFZEnTc0tgaeRFLtoser8w7U6bzRq8veLol4-HNwUGodePlZZqHK4UahYZNhPO1hjUB8MTLfrkgnLlk"}/
-              %span 人気連続ドラマ「からちゃん」のロケ地で有名になった旅館です。かけ流しの温泉が身も心も癒やしてくれます。
         .tags_area
           .row.flex.mlclear-index
             .tag_left

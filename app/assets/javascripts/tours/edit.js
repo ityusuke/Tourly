@@ -274,7 +274,7 @@ window.onload = function () {
     }
     $(this).parent().find('.input-range').attr('value', index);
   });
-    $('.range-group').each(function(){
+  $('.range-group').each(function(){
     let evaluate = Number($('.range-group').find('input').val());
     $(this).find('a').eq(evaluate-1).click();
   })

@@ -16,6 +16,8 @@ class ToursController < ApplicationController
     @tags = get_all_tags
   end
 
+
+
   def show
     @tour = Tour.find_by(id: params[:id])
     @like = Like.new
@@ -23,6 +25,8 @@ class ToursController < ApplicationController
     @favorite = Favorite.new
     @comments = @tour.comments
   end
+
+
 
   def new
     @tour = Tour.new
@@ -74,6 +78,16 @@ class ToursController < ApplicationController
     } 
     return tags.uniq
   end
+
+  # def get_spots_hash
+  #   spots_data = nil
+  #   Spot.all.map {|spot|  
+  #     if !spot.x.present? && !spot.y.present? && !spot.spotname.present? && !spot.tour_id.present?
+  #       spots_data += 
+  #     end
+  #   } 
+  #   return tags.uniq
+  # end
 
   def tour_params
     params.require(:tour).permit(:tourname, :tourcontent,:tour_type,:season,:tour_tags,
