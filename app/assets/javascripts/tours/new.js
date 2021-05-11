@@ -146,7 +146,6 @@ window.onload = function () {
           map.setCenter(getCenterPosition());
           var marker = createMaker(results, spot_names[ix]);
         } else {
-          alert('該当する結果がありませんでした：' + status);
         }
       });
     }

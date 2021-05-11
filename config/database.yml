@@ -51,4 +51,6 @@ production:
   <<: *default
   database: app_name_production
   username: app_name
+  charset: utf8
+  encoding: utf8
   password: <%= ENV['APP_NAME_DATABASE_PASSWORD'] %>

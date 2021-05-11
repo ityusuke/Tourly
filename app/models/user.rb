@@ -7,10 +7,6 @@ class User < ApplicationRecord
   has_many :liked_tours, through: :likes, source: :tour
   has_many :favorites, dependent: :destroy
   has_many :favtours, through: :favorites, source: :tour
-  has_many :relationships, dependent: :destroy
-  has_many :followings, through: :relationships, source: :follow
-  has_many :reverse_of_relationships, class_name: 'Relationship', foreign_key: 'follow_id'
-  has_many :followers, through: :reverse_of_relationships, source: :user
 
   devise:omniauthable,:rememberable
   
@@ -29,21 +25,6 @@ class User < ApplicationRecord
     puts "fav?"
     puts tour.id
     favtours.include?(tour)
-  end
-
-  def follow(other_user)
-    unless self == other_user
-      relationships.find_or_create_by(follow_id: other_user.id)
-    end
-  end
-
-  def unfollow(other_user)
-    relationship = relationships.find_by(follow_id: other_user.id)
-    relationship&.destroy
-  end
-
-  def following?(other_user)
-    followings.include?(other_user)
   end
 
   def self.find_for_google_oauth2(auth)
