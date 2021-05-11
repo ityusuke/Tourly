@@ -137,7 +137,6 @@ window.onload = function () {
           redraw();
         }
       } else {
-        alert('該当する結果がありませんでした：');
       }
     });
   })
@@ -282,10 +281,22 @@ window.onload = function () {
 
   //submit時の設定
   $('#smtbtn').attr('type','button')
-  function submitRequest(){
-    let tags = $('#tags_input').text().replaceAll('close',',')
-    $('.tour_tags').val(tags);
+  $('#smtbtn').on('click', function() {
+    try {
+      let tags_text
+      $('.chips').find('.chip').each(function(){
+        tags_text += ($(this).text()+ ",");
+      })
+      let tags = tags_text.replaceAll('close','').replaceAll('undefined','');
+      if(tags.slice(-1) === ","){
+        tags = tags.slice(0,-1);
+      } 
+      $('.tour_tags').val(tags);
+    } catch {
+      return false;
+    }finally{
     $('#smtbtn').attr('type','submit')
     $('#smtbtn').click();
-  }
+    }
+  });
 }

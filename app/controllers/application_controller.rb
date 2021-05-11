@@ -15,6 +15,14 @@ class ApplicationController < ActionController::Base
   FLASH_TOUR_EDIT_FAILED='ツアーの更新に失敗しました'
   FLASH_TOUR_DELETE_SUCCESS='ツアーを削除しました'
 
+  FLASH_USER_NEW_SUCCESS='ユーザーを登録しました'
+  FLASH_USER_NEW_FAILED='ユーザーの登録に失敗しました'
+  FLASH_USER_EDIT_SUCCESS='ユーザーを更新しました'
+  FLASH_USER_EDIT_FAILED='ユーザーの更新に失敗しました'
+  FLASH_USER_DELETE_SUCCESS='ユーザーを削除しました'
+
+  FLASH_USER_LOGIN_SUGGEST='ログインしてください'
+
   #検索機能
   def set_search
     @search = Tour.ransack(params[:q])
@@ -24,8 +32,7 @@ class ApplicationController < ActionController::Base
 #ログイン有無によるアクセス制限
   def check_user_login?
     unless current_user
-      flash.now[:notice] = 'ログインしてください'
-      redirect_back(fallback_location: root_path)
+      redirect_to root_path, notice: FLASH_USER_LOGIN_SUGGEST
     end
   end
 

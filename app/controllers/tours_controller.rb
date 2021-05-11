@@ -16,16 +16,17 @@ class ToursController < ApplicationController
     @tags = get_all_tags
   end
 
-
+  def map
+    @spots = Spot.all.where.not(spotname: [nil, '']).where.not(x: [nil, '']).where.not(y: [nil, '']).to_json
+  end
 
   def show
     @tour = Tour.find_by(id: params[:id])
-    @like = Like.new
+    @like = Like.find_by(user_id: current_user.id)
+    @favorite = Favorite.find_by(user_id: current_user.id)
     @comment = Comment.new
-    @favorite = Favorite.new
     @comments = @tour.comments
   end
-
 
 
   def new

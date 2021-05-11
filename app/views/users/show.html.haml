@@ -6,7 +6,7 @@
           - if @user.user_image.present?
             %img{:src => "#{@user.user_image}"}/
           - else 
-            %img{:src => "/assets/noUser.jpg"}/
+            = image_tag asset_path("noUser.jpg", alt: "ユーザー画像")
         .user-data
           %h6.user-name
             = @user.username

@@ -14,7 +14,7 @@
             - if @tour.user.user_image.present?
               %img{:src => "#{@tour.user.user_image}"}/
             - else 
-              %img{:src => "/assets/noUser.jpg"}/
+              = image_tag asset_path("noUser.jpg", alt: "ユーザー画像")
           = link_to("#{@tour.user.username}さん",user_path(@tour.user.id),class:"user_nameLink")
         - if @tour.tour_tags.present?
           .tags_area
@@ -53,7 +53,7 @@
                       - if spot.spot_images.present?
                         %img{:src => "#{spot.spot_images}"}
                       - else 
-                        %img{:src => "https://chofuguide.com/wp-content/uploads/2019/08/chtoseyacafe.jpg"}
+                        = image_tag asset_path("noImage.jpg", alt: "スポット画像")
                   .col.s8
                     %p.spot_about 滞在時間: #{spot.time}分
                     %p.spot_about 予算: ¥#{spot.price}
