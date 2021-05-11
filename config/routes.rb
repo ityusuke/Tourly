@@ -15,11 +15,10 @@ Rails.application.routes.draw do
   resources :users, only: %i[new create show edit update destroy follow]
   resources :tours, only: %i[index new create show
                             edit update destroy]
-  resources :relationships, only: %i[create destroy]
 
   resources :users do
     member do
-      get :followings, :followers, :favorite
+      get :favorite
     end
   end
   resources :spots, only: %i[show]

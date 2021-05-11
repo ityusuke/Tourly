@@ -1,4 +1,4 @@
--if @like.id != nil && liked?(@tour)
+-if @like.present? && liked?(@tour)
   = link_to tour_like_path(@tour.id,@like.id),method: :delete,remote: :true,class: "btn red darken-1",onclick: "Materialize.toast('いいねを解除しました', 3000)"  do
     いいね解除
 -else

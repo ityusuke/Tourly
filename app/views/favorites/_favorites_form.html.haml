@@ -1,4 +1,4 @@
-- if @favorite.id != nil && current_user.faved?(@tour)
+- if @favorite.present? && current_user.faved?(@tour)
   = link_to tour_favorite_path(@tour.id,@favorite.id),method: :delete,remote: :true,class:"btn light-blue darken-1",onclick: "Materialize.toast('お気に入りから削除しました', 3000)" do
     お気に入り解除
 - else

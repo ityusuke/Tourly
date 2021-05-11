@@ -9,11 +9,11 @@
             MAP検索
         %li
           / Modal Trigger
-          %a.modal-trigger{:href => "#modal1"} ログイン
+          %a.modal-trigger{:href => "#modal1"} メニュー
           / Modal Structure
           #modal1.modal.small_modal{:style => "width: 550px;"}
             .modal-content.menu-content
-              %h4 ログインメニュー
+              %h4 メニュー
               -if current_user  
                 .header_inner
                   = link_to new_tour_path,data: { turbolinks: false},class:"btn" do
