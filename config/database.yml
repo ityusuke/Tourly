@@ -49,8 +49,9 @@ test:
 #
 production:
   <<: *default
-  database: app_name_production
-  username: app_name
+  database: <%= ENV['DB_NAME'] %>
+  username: <%= ENV['DB_USERNAME'] %>
   charset: utf8
   encoding: utf8
-  password: <%= ENV['APP_NAME_DATABASE_PASSWORD'] %>
+  password: <%= ENV['DB_PASSWORD'] %>
+  host: <%= ENV['DB_HOSTNAME'] %>

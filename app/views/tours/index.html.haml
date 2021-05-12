@@ -4,7 +4,10 @@
     =render "layouts/sidebar", tags: @tags 
   .container.col.s8#index_lists
     = paginate @tours
-    - @tours.each do |tour|
-      = render "tours/index_item", tour: tour 
+    - if @tours.blank?
+      %p ツアーが存在しません
+    -else
+      - @tours.each do |tour|
+        = render "tours/index_item", tour: tour 
     = render "layouts/newbtn"
     = paginate @tours 

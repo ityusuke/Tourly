@@ -1,4 +1,4 @@
-%h2.page_title ツアー作成ページ
+%h2.page_title ツアー更新ページ
 .row
   .col.s5
     .card
@@ -60,11 +60,11 @@
           .form-inputs.form_group
             = f.label :ツアーの説明 ,for: "tourcontent"
             = f.input :tourcontent,label: false,placeholder:"(例)鳥取県の海産グルメを満喫できるツアーです",autocomplete: "tourcontent",class:"materialize-textarea", id: "tourcontent",data: {length: "300"}
-          = f.button :submit, "ツアーを作る",class:" btn btn-primary　center-align" ,id: "smtbtn"
+          = f.button :submit, "ツアーを更新する",class:" btn btn-primary　center-align" ,id: "smtbtn"
   .col.s7
     .card
       .btn-wrap.right-align
-        %a.waves-effect.waves-light.btn.red.darken-1.tooltipped{"data-delay" => "10", "data-position" => "top", "data-tooltip" => "GoogleMapのピンを削除します","onclick" => "deleteMakers()"}
+        %a.waves-effect.waves-light.btn.red.darken-1.tooltipped#edit_delete_pins{"data-delay" => "10", "data-position" => "top", "data-tooltip" => "GoogleMapのピンを削除します"}
           %i.material-icons.right cloud
           ピンを削除する
       .gmap-wrap

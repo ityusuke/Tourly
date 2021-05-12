@@ -23,7 +23,7 @@
     .tags_area
       .row.flex.mlclear-index
         .tag_left
-          %p.tags_about タグ一覧 :
+          %p.tags_about.inline_tag タグ一覧 :
         .tag_right.tagList
           - if tour.tour_tags.present?
             - for i in 0..tour.tour_tags.split(",").length-1

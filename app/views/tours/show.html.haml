@@ -16,15 +16,6 @@
             - else 
               = image_tag asset_path("noUser.jpg", alt: "ユーザー画像")
           = link_to("#{@tour.user.username}さん",user_path(@tour.user.id),class:"user_nameLink")
-        - if @tour.tour_tags.present?
-          .tags_area
-            .row.flex
-              .tag_left
-                %p.tags_about タグ一覧 :
-              .tag_right.tagList
-                - for i in 0..@tour.tour_tags.split(",").length-1
-                  .chip
-                    #{@tour.tour_tags.split(",")[i]}
         %h6.icons-show
           = icon "fa",'heart',class:"like good_icon"
           %span.likes_count#likes_count #{@tour.likes.count}

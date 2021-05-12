@@ -209,7 +209,7 @@ window.onload = function () {
   //deleteMakers
   //Google Map上の全マーカーを削除する
   //////////////////////////
-  function deleteMakers() {
+  $(document).on('click','#new_delete_pins',function deleteMakers() {
     //生成済マーカーを順次すべて削除する
     map = new google.maps.Map(document.getElementById('map'), {
       center: new google.maps.LatLng(35.681382, 139.766084),
@@ -233,7 +233,7 @@ window.onload = function () {
         $(this).text('-');
       })
     })
-  }
+  })
 
   //////////////////////////
   //Mateliarizeの各種設定
