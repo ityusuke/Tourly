@@ -2,6 +2,8 @@
 ホテルの料飲部のホール（前職）の業務改善を目的としたアプリです。
 ホールとキッチンのコミュニケーションを改善することを主目的としています。
 ホールとキッチンの間や、スタッフの間で口頭伝達等で正確に把握できていないものを管理します。
+![Imgur](https://i.imgur.com/msjUy1A.png)
+![Imgur](https://i.imgur.com/dequFtE.png)
 
 URL
 https://www.tourly.xyz/
