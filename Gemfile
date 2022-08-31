@@ -60,7 +60,7 @@ gem 'simple_form'
 gem 'carrierwave'
 # make easier restigation and login
 gem "devise"
-gem 'omniauth', '1.9.1'
+gem 'omniauth', '1.9.2'
 gem 'omniauth-google-oauth2'
 # user admin gem
 gem 'cancancan'
